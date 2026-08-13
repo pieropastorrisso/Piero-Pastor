@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   "use strict";
 
-  /* =========================
+  /* =====================================================
      NAVEGACIÓN
-  ========================= */
+  ===================================================== */
 
   const vistas = [...document.querySelectorAll(".vista")];
   const menu = document.getElementById("menu");
@@ -15,15 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
     menu.classList.remove("menu-abierto");
     menuToggle.classList.remove("activo");
 
-    menuToggle.setAttribute(
-      "aria-expanded",
-      "false"
-    );
-
-    menuToggle.setAttribute(
-      "aria-label",
-      "Abrir menú"
-    );
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "Abrir menú");
 
     menuToggle.textContent = "☰";
   }
@@ -31,13 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function abrirCerrarMenu() {
     if (!menu || !menuToggle) return;
 
-    const abierto =
-      menu.classList.toggle("menu-abierto");
+    const abierto = menu.classList.toggle("menu-abierto");
 
-    menuToggle.classList.toggle(
-      "activo",
-      abierto
-    );
+    menuToggle.classList.toggle("activo", abierto);
 
     menuToggle.setAttribute(
       "aria-expanded",
@@ -46,39 +35,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     menuToggle.setAttribute(
       "aria-label",
-      abierto
-        ? "Cerrar menú"
-        : "Abrir menú"
+      abierto ? "Cerrar menú" : "Abrir menú"
     );
 
-    menuToggle.textContent =
-      abierto ? "✕" : "☰";
+    menuToggle.textContent = abierto ? "✕" : "☰";
   }
 
-  function activarVista(
-    id,
-    actualizarHash = true
-  ) {
-    const destino =
-      document.getElementById(id);
+  function activarVista(id, actualizarHash = true) {
+    const destino = document.getElementById(id);
 
-    if (
-      !destino ||
-      !destino.classList.contains("vista")
-    ) {
-      const inicio =
-        document.getElementById("inicio");
+    if (!destino || !destino.classList.contains("vista")) {
+      const inicio = document.getElementById("inicio");
 
       if (inicio) {
         vistas.forEach(v =>
-          v.classList.remove(
-            "vista-activa"
-          )
+          v.classList.remove("vista-activa")
         );
 
-        inicio.classList.add(
-          "vista-activa"
-        );
+        inicio.classList.add("vista-activa");
       }
 
       cerrarMenu();
@@ -86,14 +60,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     vistas.forEach(v =>
-      v.classList.remove(
-        "vista-activa"
-      )
+      v.classList.remove("vista-activa")
     );
 
-    destino.classList.add(
-      "vista-activa"
-    );
+    destino.classList.add("vista-activa");
 
     cerrarMenu();
 
@@ -113,7 +83,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (id === "rasca-gana") {
       setTimeout(
         prepararRascaSiVisible,
-        50
+        100
+      );
+    }
+
+    if (id === "ruleta") {
+      setTimeout(
+        prepararRuleta,
+        100
       );
     }
   }
@@ -151,7 +128,10 @@ document.addEventListener("DOMContentLoaded", () => {
           const href =
             enlace.getAttribute("href");
 
-          if (!href || href === "#") {
+          if (
+            !href ||
+            href === "#"
+          ) {
             return;
           }
 
@@ -163,9 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (
             !destino ||
-            !destino.classList.contains(
-              "vista"
-            )
+            !destino.classList.contains("vista")
           ) {
             return;
           }
@@ -178,7 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
           );
         }
       );
-
     });
 
   document.addEventListener(
@@ -193,7 +170,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ) {
         cerrarMenu();
       }
-
     }
   );
 
@@ -204,7 +180,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === "Escape") {
         cerrarMenu();
       }
-
     }
   );
 
@@ -216,92 +191,72 @@ document.addEventListener("DOMContentLoaded", () => {
   activarVistaDesdeHash();
 
 
-  /* =========================
+  /* =====================================================
      EXPERIENCIAS / MODAL
-  ========================= */
+  ===================================================== */
 
   const experiencias = {
 
     1: {
       titulo:
         'Con Brayan Kamus "Cantante"',
-
       descripcion:
         "Presentación y experiencia profesional en Clínica del Corazón.",
-
       imagen:
         "img/galeria/foto1.jpeg",
-
       video: ""
     },
 
     2: {
       titulo:
         "Evento en Monalisa Club Ica",
-
       descripcion:
         "Animación y conducción en Monalisa Club Ica.",
-
       imagen:
         "img/galeria/foto2.jpeg",
-
       video: ""
     },
 
     3: {
       titulo:
         "Graduación Contabilidad USJB",
-
       descripcion:
         "Maestro de ceremonias en una graduación realizada en Chincha.",
-
       imagen:
         "img/galeria/foto3.jpeg",
-
       video: ""
     },
 
     4: {
       titulo:
         'Con Deisy Araujo "Vedette"',
-
       descripcion:
         "Participación en la inauguración de Clínica del Corazón.",
-
       imagen:
         "img/galeria/foto4.jpeg",
-
       video: ""
     },
 
     5: {
       titulo:
         'Artista Invitada: "Anna Paz"',
-
       descripcion:
         "Presentación y participación en evento realizado en Clínica.",
-
       imagen:
         "img/galeria/foto5.jpeg",
-
       video: ""
     },
 
     6: {
       titulo:
         "Celebración Familiar",
-
       descripcion:
         "Animación y participación en la celebración del 50 aniversario de Raúl Pastor.",
-
       imagen:
         "img/galeria/foto6.jpeg",
-
       video: ""
     }
-
   };
-
 
   const modal =
     document.getElementById(
@@ -338,7 +293,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ".modal-overlay"
     );
 
-
   function cerrarExperiencia() {
 
     if (!modal) return;
@@ -356,7 +310,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "";
   }
 
-
   function abrirExperiencia(id) {
 
     const experiencia =
@@ -369,9 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-
     if (modalImagen) {
-
       modalImagen.src =
         experiencia.imagen;
 
@@ -379,20 +330,15 @@ document.addEventListener("DOMContentLoaded", () => {
         experiencia.titulo;
     }
 
-
     if (modalTitulo) {
-
       modalTitulo.textContent =
         experiencia.titulo;
     }
 
-
     if (modalDescripcion) {
-
       modalDescripcion.textContent =
         experiencia.descripcion;
     }
-
 
     if (modalVideoLink) {
 
@@ -412,11 +358,8 @@ document.addEventListener("DOMContentLoaded", () => {
         modalVideoLink.removeAttribute(
           "href"
         );
-
       }
-
     }
-
 
     modal.classList.add(
       "activo"
@@ -431,7 +374,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "hidden";
   }
 
-
   document
     .querySelectorAll(
       ".experiencia-card"
@@ -445,12 +387,9 @@ document.addEventListener("DOMContentLoaded", () => {
           abrirExperiencia(
             card.dataset.experiencia
           );
-
         }
       );
-
     });
-
 
   if (modalCerrar) {
 
@@ -458,9 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "click",
       cerrarExperiencia
     );
-
   }
-
 
   if (modalOverlay) {
 
@@ -468,9 +405,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "click",
       cerrarExperiencia
     );
-
   }
-
 
   document.addEventListener(
     "keydown",
@@ -483,28 +418,181 @@ document.addEventListener("DOMContentLoaded", () => {
           "activo"
         )
       ) {
-
         cerrarExperiencia();
-
       }
-
     }
   );
 
 
-  /* =========================
+  /* =====================================================
+     PREMIOS COMPARTIDOS
+     RASCA + RULETA
+  ===================================================== */
+
+  const premios = [
+
+    {
+      titulo: "1 CERVEZA",
+      mensaje:
+        "¡Te tocó 1 cerveza!",
+      imagen:
+        "rasca/cerveza.jpg"
+    },
+
+    {
+      titulo: "1 AGUA",
+      mensaje:
+        "¡Te tocó 1 agua!",
+      imagen:
+        "rasca/agua.jpg"
+    },
+
+    {
+      titulo: "1 POLO",
+      mensaje:
+        "¡Te tocó 1 polo!",
+      imagen:
+        "rasca/polo.jpg"
+    },
+
+    {
+      titulo: "1 GORRO",
+      mensaje:
+        "¡Te tocó 1 gorro!",
+      imagen:
+        "rasca/gorro.jpg"
+    },
+
+    {
+      titulo: "1 VOLT",
+      mensaje:
+        "¡Te tocó 1 Volt!",
+      imagen:
+        "rasca/volt.jpg"
+    },
+
+    {
+      titulo: "CASTIGO",
+      mensaje:
+        "¡Te tocó castigo!",
+      imagen:
+        "rasca/castigo.jpg"
+    },
+
+    {
+      titulo: "SIGUE INTENTANDO",
+      mensaje:
+        "¡Sigue intentando!",
+      imagen:
+        "rasca/sigue-intentando.jpg"
+    },
+
+    {
+      titulo:
+        "2 PEDIDOS MUSICALES",
+      mensaje:
+        "¡Ganaste 2 pedidos musicales!",
+      imagen:
+        "rasca/musical.jpg"
+    },
+
+    {
+      titulo:
+        "1 BESO DEL ANIMADOR",
+      mensaje:
+        "¡Te tocó 1 beso del animador!",
+      imagen:
+        "rasca/beso.jpg"
+    }
+  ];
+
+
+  /* =====================================================
+     CONTADOR GENERAL DE PARTICIPANTES
+  ===================================================== */
+
+  const CLAVE_CONTADOR =
+    "pieroPastorRascaParticipantes";
+
+  const PREMIO_ESPECIAL_CADA =
+    120;
+
+  function obtenerParticipante() {
+
+    let numero =
+      Number(
+        localStorage.getItem(
+          CLAVE_CONTADOR
+        ) || 0
+      );
+
+    if (
+      !Number.isFinite(numero) ||
+      numero < 0
+    ) {
+      numero = 0;
+    }
+
+    numero++;
+
+    localStorage.setItem(
+      CLAVE_CONTADOR,
+      String(numero)
+    );
+
+    return numero;
+  }
+
+  function obtenerPremio(numero) {
+
+    if (
+      numero %
+        PREMIO_ESPECIAL_CADA ===
+      0
+    ) {
+
+      return {
+
+        titulo:
+          "VALE S/ 50",
+
+        mensaje:
+          "¡FELICIDADES! Ganaste un Vale de S/ 50.",
+
+        imagen:
+          "rasca/vale-50.jpg",
+
+        especial:
+          true
+      };
+    }
+
+    return {
+
+      ...premios[
+        (numero - 1) %
+        premios.length
+      ],
+
+      especial:
+        false
+    };
+  }
+
+
+  /* =====================================================
      QR
-  ========================= */
+  ===================================================== */
 
   const contenedorQR =
     document.getElementById(
       "rasca-qr"
     );
 
-
   if (
     contenedorQR &&
-    typeof QRCode !== "undefined"
+    typeof QRCode !==
+      "undefined"
   ) {
 
     contenedorQR.innerHTML =
@@ -515,11 +603,9 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.pathname +
       "#rasca-gana";
 
-
     new QRCode(
       contenedorQR,
       {
-
         text: urlQR,
 
         width: 150,
@@ -534,16 +620,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         correctLevel:
           QRCode.CorrectLevel.H
-
       }
     );
-
   }
 
 
-  /* =========================
+  /* =====================================================
      RASCA Y GANA
-  ========================= */
+  ===================================================== */
 
   const rascaCanvas =
     document.getElementById(
@@ -590,244 +674,45 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       );
 
-
-    const CLAVE_CONTADOR =
-      "pieroPastorRascaParticipantes";
-
-
-    /* ==================================
-       RASCA AL 85%
-    ================================== */
-
     const UMBRAL_RASCADO =
       85;
 
+    const BRUSH_MIN =
+      20;
 
-    const PREMIO_ESPECIAL_CADA =
-      40;
+    const BRUSH_MAX =
+      36;
 
-
-    /* ==================================
-       9 PREMIOS NORMALES
-       + 1 VALE ESPECIAL
-    ================================== */
-
-    const premios = [
-
-      {
-        titulo:
-          "1 CERVEZA",
-
-        mensaje:
-          "¡Te tocó 1 cerveza!",
-
-        imagen:
-          "rasca/cerveza.jpg"
-      },
-
-      {
-        titulo:
-          "1 AGUA",
-
-        mensaje:
-          "¡Te tocó 1 agua!",
-
-        imagen:
-          "rasca/agua.jpg"
-      },
-
-      {
-        titulo:
-          "1 POLO",
-
-        mensaje:
-          "¡Te tocó 1 polo!",
-
-        imagen:
-          "rasca/polo.jpg"
-      },
-
-      {
-        titulo:
-          "1 GORRO",
-
-        mensaje:
-          "¡Te tocó 1 gorro!",
-
-        imagen:
-          "rasca/gorro.jpg"
-      },
-
-      {
-        titulo:
-          "1 VOLT",
-
-        mensaje:
-          "¡Te tocó 1 Volt!",
-
-        imagen:
-          "rasca/volt.jpg"
-      },
-
-      {
-        titulo:
-          "CASTIGO",
-
-        mensaje:
-          "¡Te tocó castigo!",
-
-        imagen:
-          "rasca/castigo.jpg"
-      },
-
-      {
-        titulo:
-          "SIGUE INTENTANDO",
-
-        mensaje:
-          "¡Sigue intentando!",
-
-        imagen:
-          "rasca/sigue-intentando.jpg"
-      },
-
-      {
-        titulo:
-          "2 PEDIDOS MUSICALES",
-
-        mensaje:
-          "¡Ganaste 2 pedidos musicales!",
-
-        imagen:
-          "rasca/musical.jpg"
-      },
-
-      {
-        titulo:
-          "1 BESO DEL ANIMADOR",
-
-        mensaje:
-          "¡Te tocó 1 beso del animador!",
-
-        imagen:
-          "rasca/beso.jpg"
-      }
-
-    ];
-
-
-    function obtenerParticipante() {
-
-      let numero =
-        Number(
-          localStorage.getItem(
-            CLAVE_CONTADOR
-          ) || 0
-        );
-
-
-      if (
-        !Number.isFinite(
-          numero
-        ) ||
-        numero < 0
-      ) {
-
-        numero = 0;
-
-      }
-
-
-      numero++;
-
-
-      localStorage.setItem(
-        CLAVE_CONTADOR,
-        String(numero)
-      );
-
-
-      return numero;
-    }
-
-
-    function obtenerPremio(
-      numero
-    ) {
-
-      /* =========================
-         CADA 40:
-         VALE S/ 50
-      ========================= */
-
-      if (
-        numero %
-          PREMIO_ESPECIAL_CADA ===
-        0
-      ) {
-
-        return {
-
-          titulo:
-            "VALE S/ 50",
-
-          mensaje:
-            "¡FELICIDADES! Ganaste un Vale de S/ 50.",
-
-          imagen:
-            "rasca/vale-50.jpg",
-
-          especial:
-            true
-
-        };
-
-      }
-
-
-      /* =========================
-         RESTO DE PREMIOS
-      ========================= */
-
-      return {
-
-        ...premios[
-          (numero - 1) %
-          premios.length
-        ],
-
-        especial:
-          false
-
-      };
-
-    }
-
+    const CHECK_INTERVAL =
+      120;
 
     let participante =
       obtenerParticipante();
-
 
     let premioActual =
       obtenerPremio(
         participante
       );
 
-
     let rascando =
       false;
-
 
     let tarjetaTerminada =
       false;
 
+    let anchoCanvas = 0;
 
-    let anchoCanvas =
-      0;
+    let altoCanvas = 0;
 
+    let ultimoPunto = null;
 
-    let altoCanvas =
-      0;
+    let ultimoChequeo = 0;
+
+    let porcentajeActual = 0;
+
+    let sonidoContexto = null;
+
+    let ultimoSonido = 0;
 
 
     function actualizarCabecera() {
@@ -842,9 +727,7 @@ document.addEventListener("DOMContentLoaded", () => {
             4,
             "0"
           );
-
       }
-
 
       if (
         rascaEstadoCabecera
@@ -852,17 +735,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         rascaEstadoCabecera.textContent =
           tarjetaTerminada
-
             ? (
                 premioActual.especial
                   ? "PREMIO"
                   : "DESCUBIERTO"
               )
-
             : "LISTO";
-
       }
-
     }
 
 
@@ -871,54 +750,269 @@ document.addEventListener("DOMContentLoaded", () => {
       rascaPremio.className =
         "rasca-premio";
 
-
       rascaPremio.innerHTML =
+        `
+        <div class="rasca-premio-oculto">
 
-        '<div class="rasca-premio-oculto">' +
+          <span>
+            PIERO PASTOR
+          </span>
 
-        '<span>PIERO PASTOR</span>' +
+          <strong>
+            PREMIO OCULTO
+          </strong>
 
-        '<strong>PREMIO OCULTO</strong>' +
+          <small>
+            RASCA PARA DESCUBRIR
+          </small>
 
-        '<small>RASCA PARA DESCUBRIR</small>' +
+        </div>
+        `;
+    }
 
-        "</div>";
 
+    function crearTexturaMetalica() {
+
+      ctx.globalCompositeOperation =
+        "source-over";
+
+
+      const base =
+        ctx.createLinearGradient(
+          0,
+          0,
+          anchoCanvas,
+          altoCanvas
+        );
+
+      base.addColorStop(
+        0,
+        "#4b4b4b"
+      );
+
+      base.addColorStop(
+        0.12,
+        "#d7d7d7"
+      );
+
+      base.addColorStop(
+        0.28,
+        "#777"
+      );
+
+      base.addColorStop(
+        0.43,
+        "#eeeeee"
+      );
+
+      base.addColorStop(
+        0.58,
+        "#777"
+      );
+
+      base.addColorStop(
+        0.75,
+        "#cfcfcf"
+      );
+
+      base.addColorStop(
+        0.9,
+        "#666"
+      );
+
+      base.addColorStop(
+        1,
+        "#3c3c3c"
+      );
+
+      ctx.fillStyle =
+        base;
+
+      ctx.fillRect(
+        0,
+        0,
+        anchoCanvas,
+        altoCanvas
+      );
+
+
+      const brillo =
+        ctx.createLinearGradient(
+          -anchoCanvas * .3,
+          altoCanvas,
+          anchoCanvas * 1.3,
+          -altoCanvas
+        );
+
+      brillo.addColorStop(
+        0,
+        "rgba(255,255,255,0)"
+      );
+
+      brillo.addColorStop(
+        .43,
+        "rgba(255,255,255,.08)"
+      );
+
+      brillo.addColorStop(
+        .5,
+        "rgba(255,255,255,.32)"
+      );
+
+      brillo.addColorStop(
+        .57,
+        "rgba(255,255,255,.08)"
+      );
+
+      brillo.addColorStop(
+        1,
+        "rgba(255,255,255,0)"
+      );
+
+      ctx.fillStyle =
+        brillo;
+
+      ctx.fillRect(
+        0,
+        0,
+        anchoCanvas,
+        altoCanvas
+      );
+
+
+      const cantidad =
+        Math.min(
+          10000,
+          Math.floor(
+            anchoCanvas *
+            altoCanvas /
+            30
+          )
+        );
+
+
+      for (
+        let i = 0;
+        i < cantidad;
+        i++
+      ) {
+
+        const x =
+          Math.random() *
+          anchoCanvas;
+
+        const y =
+          Math.random() *
+          altoCanvas;
+
+        const radio =
+          Math.random() *
+          1.1 +
+          .15;
+
+        const claro =
+          Math.random() >
+          .5;
+
+        ctx.fillStyle =
+          claro
+            ? `rgba(255,255,255,${
+                Math.random() * .12
+              })`
+            : `rgba(0,0,0,${
+                Math.random() * .14
+              })`;
+
+        ctx.beginPath();
+
+        ctx.arc(
+          x,
+          y,
+          radio,
+          0,
+          Math.PI * 2
+        );
+
+        ctx.fill();
+      }
+
+
+      ctx.strokeStyle =
+        "rgba(255,255,255,.32)";
+
+      ctx.lineWidth = 1;
+
+      ctx.strokeRect(
+        10,
+        10,
+        anchoCanvas - 20,
+        altoCanvas - 20
+      );
+
+
+      ctx.textAlign =
+        "center";
+
+      ctx.textBaseline =
+        "middle";
+
+      ctx.shadowColor =
+        "rgba(0,0,0,.5)";
+
+      ctx.shadowBlur = 5;
+
+      ctx.shadowOffsetY = 2;
+
+      ctx.fillStyle =
+        "#ffffff";
+
+      ctx.font =
+        "900 30px Arial";
+
+      ctx.fillText(
+        "RASCA AQUÍ",
+        anchoCanvas / 2,
+        altoCanvas / 2 - 12
+      );
+
+      ctx.font =
+        "800 14px Arial";
+
+      ctx.fillText(
+        "PIERO PASTOR",
+        anchoCanvas / 2,
+        altoCanvas / 2 + 25
+      );
+
+      ctx.shadowColor =
+        "transparent";
+
+      ctx.shadowBlur = 0;
+
+      ctx.shadowOffsetY = 0;
     }
 
 
     function prepararCanvas() {
 
-      if (!rascaCanvas) {
+      if (!rascaCanvas)
         return;
-      }
-
 
       const rect =
         rascaCanvas.getBoundingClientRect();
-
-
-      /* ==================================
-         SI ESTÁ OCULTO NO LO PREPARAMOS
-      ================================== */
 
       if (
         rect.width < 20 ||
         rect.height < 20
       ) {
-
         return;
-
       }
-
 
       anchoCanvas =
         rect.width;
 
-
       altoCanvas =
         rect.height;
-
 
       const escala =
         Math.min(
@@ -927,20 +1021,17 @@ document.addEventListener("DOMContentLoaded", () => {
           2
         );
 
-
       rascaCanvas.width =
         Math.floor(
           anchoCanvas *
-            escala
+          escala
         );
-
 
       rascaCanvas.height =
         Math.floor(
           altoCanvas *
-            escala
+          escala
         );
-
 
       ctx.setTransform(
         escala,
@@ -951,248 +1042,19 @@ document.addEventListener("DOMContentLoaded", () => {
         0
       );
 
-
-      ctx.globalCompositeOperation =
-        "source-over";
-
-
       rascaCanvas.style.opacity =
         "1";
-
 
       rascaCanvas.style.pointerEvents =
         "auto";
 
+      crearTexturaMetalica();
 
-      const degradado =
-        ctx.createLinearGradient(
-          0,
-          0,
-          anchoCanvas,
-          altoCanvas
-        );
+      ultimoPunto =
+        null;
 
-
-      degradado.addColorStop(
-        0,
-        "#777"
-      );
-
-
-      degradado.addColorStop(
-        0.5,
-        "#bdbdbd"
-      );
-
-
-      degradado.addColorStop(
-        1,
-        "#666"
-      );
-
-
-      ctx.fillStyle =
-        degradado;
-
-
-      ctx.fillRect(
-        0,
-        0,
-        anchoCanvas,
-        altoCanvas
-      );
-
-
-      ctx.fillStyle =
-        "#fff";
-
-
-      ctx.textAlign =
-        "center";
-
-
-      ctx.textBaseline =
-        "middle";
-
-
-      ctx.font =
-        "900 30px Arial";
-
-
-      ctx.fillText(
-        "RASCA AQUÍ",
-        anchoCanvas / 2,
-        altoCanvas / 2 - 8
-      );
-
-
-      ctx.font =
-        "700 14px Arial";
-
-
-      ctx.fillText(
-        "PIERO PASTOR",
-        anchoCanvas / 2,
-        altoCanvas / 2 + 35
-      );
-
-    }
-
-
-    function mostrarPremio() {
-
-      if (
-        tarjetaTerminada
-      ) {
-
-        return;
-
-      }
-
-
-      tarjetaTerminada =
-        true;
-
-
-      rascando =
-        false;
-
-
-      rascaPremio.className =
-        "rasca-premio " +
-        (
-          premioActual.especial
-            ? "premio-especial"
-            : ""
-        );
-
-
-      rascaPremio.innerHTML =
-        "";
-
-
-      const resultado =
-        document.createElement(
-          "div"
-        );
-
-
-      resultado.className =
-        "resultado-premio";
-
-
-      const imagen =
-        document.createElement(
-          "img"
-        );
-
-
-      imagen.className =
-        "imagen-premio-rasca";
-
-
-      imagen.src =
-        premioActual.imagen;
-
-
-      imagen.alt =
-        premioActual.titulo;
-
-
-      imagen.loading =
-        "eager";
-
-
-      imagen.onerror =
-        () => {
-
-          console.warn(
-            "No se encontró:",
-            premioActual.imagen
-          );
-
-        };
-
-
-      const titulo =
-        document.createElement(
-          "div"
-        );
-
-
-      titulo.className =
-        "titulo-premio-rasca";
-
-
-      titulo.textContent =
-        premioActual.titulo;
-
-
-      const mensaje =
-        document.createElement(
-          "p"
-        );
-
-
-      mensaje.className =
-        "mensaje-premio-rasca";
-
-
-      mensaje.textContent =
-        premioActual.mensaje;
-
-
-      const codigo =
-        document.createElement(
-          "div"
-        );
-
-
-      codigo.className =
-        "codigo-premio-rasca";
-
-
-      codigo.textContent =
-        "Código PP-" +
-        String(
-          participante
-        ).padStart(
-          4,
-          "0"
-        );
-
-
-      resultado.append(
-        imagen,
-        titulo,
-        mensaje,
-        codigo
-      );
-
-
-      rascaPremio.appendChild(
-        resultado
-      );
-
-
-      rascaCanvas.style.opacity =
-        "0";
-
-
-      rascaCanvas.style.pointerEvents =
-        "none";
-
-
-      if (rascaEstado) {
-
-        rascaEstado.textContent =
-          premioActual.mensaje;
-
-      }
-
-
-      actualizarCabecera();
-
+      porcentajeActual =
+        0;
     }
 
 
@@ -1203,7 +1065,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const rect =
         rascaCanvas.getBoundingClientRect();
 
-
       return {
 
         x:
@@ -1213,9 +1074,318 @@ document.addEventListener("DOMContentLoaded", () => {
         y:
           evento.clientY -
           rect.top
-
       };
+    }
 
+
+    function distancia(
+      a,
+      b
+    ) {
+
+      return Math.hypot(
+        a.x - b.x,
+        a.y - b.y
+      );
+    }
+
+
+    function dibujarSegmento(
+      inicio,
+      fin,
+      radio
+    ) {
+
+      const distanciaTotal =
+        distancia(
+          inicio,
+          fin
+        );
+
+      const pasos =
+        Math.max(
+          1,
+          Math.ceil(
+            distanciaTotal /
+            Math.max(
+              4,
+              radio * .35
+            )
+          )
+        );
+
+      ctx.globalCompositeOperation =
+        "destination-out";
+
+
+      for (
+        let i = 0;
+        i <= pasos;
+        i++
+      ) {
+
+        const t =
+          i / pasos;
+
+        const x =
+          inicio.x +
+          (
+            fin.x -
+            inicio.x
+          ) *
+          t;
+
+        const y =
+          inicio.y +
+          (
+            fin.y -
+            inicio.y
+          ) *
+          t;
+
+        const pincel =
+          ctx.createRadialGradient(
+            x,
+            y,
+            radio * .05,
+            x,
+            y,
+            radio
+          );
+
+        pincel.addColorStop(
+          0,
+          "rgba(0,0,0,1)"
+        );
+
+        pincel.addColorStop(
+          .68,
+          "rgba(0,0,0,.95)"
+        );
+
+        pincel.addColorStop(
+          .9,
+          "rgba(0,0,0,.55)"
+        );
+
+        pincel.addColorStop(
+          1,
+          "rgba(0,0,0,0)"
+        );
+
+        ctx.fillStyle =
+          pincel;
+
+        ctx.beginPath();
+
+        ctx.arc(
+          x,
+          y,
+          radio,
+          0,
+          Math.PI * 2
+        );
+
+        ctx.fill();
+      }
+
+      ctx.globalCompositeOperation =
+        "source-over";
+    }
+
+
+    function crearParticulas(
+      x,
+      y
+    ) {
+
+      const tarjeta =
+        rascaCanvas.closest(
+          ".rasca-tarjeta"
+        );
+
+      if (!tarjeta)
+        return;
+
+      for (
+        let i = 0;
+        i < 2;
+        i++
+      ) {
+
+        const particula =
+          document.createElement(
+            "span"
+          );
+
+        particula.className =
+          "rasca-particula";
+
+        particula.style.left =
+          `${x}px`;
+
+        particula.style.top =
+          `${y}px`;
+
+        particula.style.setProperty(
+          "--dx",
+          `${(Math.random() - .5) * 30}px`
+        );
+
+        particula.style.setProperty(
+          "--dy",
+          `${-Math.random() * 25 - 5}px`
+        );
+
+        tarjeta.appendChild(
+          particula
+        );
+
+        setTimeout(
+          () =>
+            particula.remove(),
+          650
+        );
+      }
+    }
+
+
+    function sonidoRaspado() {
+
+      const ahora =
+        performance.now();
+
+      if (
+        ahora -
+        ultimoSonido <
+        75
+      ) {
+        return;
+      }
+
+      ultimoSonido =
+        ahora;
+
+      try {
+
+        if (!sonidoContexto) {
+
+          sonidoContexto =
+            new (
+              window.AudioContext ||
+              window.webkitAudioContext
+            )();
+        }
+
+        if (
+          sonidoContexto.state ===
+          "suspended"
+        ) {
+
+          sonidoContexto.resume();
+        }
+
+        const duracion =
+          .035;
+
+        const buffer =
+          sonidoContexto.createBuffer(
+            1,
+            Math.floor(
+              sonidoContexto.sampleRate *
+              duracion
+            ),
+            sonidoContexto.sampleRate
+          );
+
+        const data =
+          buffer.getChannelData(
+            0
+          );
+
+        for (
+          let i = 0;
+          i < data.length;
+          i++
+        ) {
+
+          data[i] =
+            (
+              Math.random() * 2 -
+              1
+            ) *
+            (
+              1 -
+              i / data.length
+            );
+        }
+
+        const fuente =
+          sonidoContexto
+            .createBufferSource();
+
+        const filtro =
+          sonidoContexto
+            .createBiquadFilter();
+
+        const ganancia =
+          sonidoContexto
+            .createGain();
+
+        fuente.buffer =
+          buffer;
+
+        filtro.type =
+          "bandpass";
+
+        filtro.frequency.value =
+          1800 +
+          Math.random() *
+          1000;
+
+        ganancia.gain.setValueAtTime(
+          .018,
+          sonidoContexto.currentTime
+        );
+
+        ganancia.gain.exponentialRampToValueAtTime(
+          .001,
+          sonidoContexto.currentTime +
+          duracion
+        );
+
+        fuente.connect(
+          filtro
+        );
+
+        filtro.connect(
+          ganancia
+        );
+
+        ganancia.connect(
+          sonidoContexto.destination
+        );
+
+        fuente.start();
+
+      } catch (_) {}
+    }
+
+
+    function vibrar() {
+
+      try {
+
+        if (
+          "vibrate" in navigator
+        ) {
+
+          navigator.vibrate(
+            7
+          );
+        }
+
+      } catch (_) {}
     }
 
 
@@ -1227,90 +1397,96 @@ document.addEventListener("DOMContentLoaded", () => {
         !rascando ||
         tarjetaTerminada
       ) {
-
         return;
-
       }
-
 
       if (
         evento.cancelable
       ) {
-
         evento.preventDefault();
-
       }
-
 
       const posicion =
         obtenerPosicion(
           evento
         );
 
-
-      ctx.globalCompositeOperation =
-        "destination-out";
-
-
-      ctx.beginPath();
-
-
-      ctx.arc(
-
-        posicion.x,
-
-        posicion.y,
-
+      const radio =
         Math.max(
-          26,
+          BRUSH_MIN,
           Math.min(
-            38,
-            anchoCanvas *
-              0.035
+            BRUSH_MAX,
+            Math.min(
+              anchoCanvas,
+              altoCanvas
+            ) * .035
           )
-        ),
+        );
 
-        0,
+      if (
+        !ultimoPunto
+      ) {
 
-        Math.PI * 2
+        ultimoPunto =
+          posicion;
+      }
 
+      dibujarSegmento(
+        ultimoPunto,
+        posicion,
+        radio
       );
 
+      ultimoPunto =
+        posicion;
 
-      ctx.fill();
+      crearParticulas(
+        posicion.x,
+        posicion.y
+      );
 
+      sonidoRaspado();
 
-      ctx.globalCompositeOperation =
-        "source-over";
+      if (
+        evento.pointerType ===
+        "touch"
+      ) {
 
+        vibrar();
+      }
 
-      comprobarRascado();
+      const ahora =
+        performance.now();
 
+      if (
+        ahora -
+        ultimoChequeo >=
+        CHECK_INTERVAL
+      ) {
+
+        ultimoChequeo =
+          ahora;
+
+        comprobarRascado();
+      }
     }
 
 
     function comprobarRascado() {
 
-      /* =========================================
-         CORRECCIÓN IMPORTANTE
-
-         Antes se revisaba solamente una pequeña
-         parte del canvas.
-
-         Ahora revisamos TODA la tarjeta.
-      ========================================= */
-
+      if (
+        tarjetaTerminada
+      ) {
+        return;
+      }
 
       const ancho =
         rascaCanvas.width;
 
-
       const alto =
         rascaCanvas.height;
 
-
       let datos;
-
 
       try {
 
@@ -1322,42 +1498,27 @@ document.addEventListener("DOMContentLoaded", () => {
             alto
           ).data;
 
-      } catch (error) {
+      } catch (_) {
 
         return;
-
       }
-
 
       let transparentes =
         0;
 
-
       let total =
         0;
 
-
-      /* =========================================
-         MUESTREO INTELIGENTE
-
-         No revisamos absolutamente cada píxel
-         porque en celulares sería pesado.
-
-         Revisamos toda la superficie.
-      ========================================= */
-
-
       const paso =
         Math.max(
-          4,
+          8,
           Math.floor(
             Math.min(
               ancho,
               alto
-            ) / 180
+            ) / 150
           )
         );
-
 
       for (
         let y = 0;
@@ -1378,27 +1539,22 @@ document.addEventListener("DOMContentLoaded", () => {
               ) +
               x
             ) *
-              4 +
+            4 +
             3;
-
 
           total++;
 
-
           if (
-            datos[indice] < 80
+            datos[indice] <
+            80
           ) {
 
             transparentes++;
-
           }
-
         }
-
       }
 
-
-      const porcentaje =
+      porcentajeActual =
         total
           ? (
               transparentes /
@@ -1407,26 +1563,195 @@ document.addEventListener("DOMContentLoaded", () => {
             100
           : 0;
 
-
       if (
-        porcentaje >=
+        porcentajeActual >=
         UMBRAL_RASCADO
       ) {
 
         mostrarPremio();
-
       }
-
     }
 
 
-    /* ==================================
-       RASPAR CON MOUSE
-       TOUCH
-       CELULAR
-       TABLET
-       LAPIZ
-    ================================== */
+    function crearConfeti() {
+
+      const tarjeta =
+        rascaCanvas.closest(
+          ".rasca-tarjeta"
+        );
+
+      if (!tarjeta)
+        return;
+
+      for (
+        let i = 0;
+        i < 36;
+        i++
+      ) {
+
+        const pieza =
+          document.createElement(
+            "span"
+          );
+
+        pieza.className =
+          "rasca-confeti";
+
+        pieza.style.left =
+          "50%";
+
+        pieza.style.top =
+          "45%";
+
+        pieza.style.setProperty(
+          "--dx",
+          `${(Math.random() - .5) * 420}px`
+        );
+
+        pieza.style.setProperty(
+          "--dy",
+          `${(Math.random() - .5) * 300}px`
+        );
+
+        tarjeta.appendChild(
+          pieza
+        );
+
+        setTimeout(
+          () =>
+            pieza.remove(),
+          1500
+        );
+      }
+    }
+
+
+    function mostrarPremio() {
+
+      if (
+        tarjetaTerminada
+      ) {
+        return;
+      }
+
+      tarjetaTerminada =
+        true;
+
+      rascando =
+        false;
+
+      ultimoPunto =
+        null;
+
+      rascaCanvas.classList.remove(
+        "rascando"
+      );
+
+      rascaCanvas.style.opacity =
+        "0";
+
+      rascaCanvas.style.pointerEvents =
+        "none";
+
+      rascaPremio.className =
+        "rasca-premio " +
+        (
+          premioActual.especial
+            ? "premio-especial"
+            : ""
+        );
+
+      rascaPremio.innerHTML =
+        "";
+
+      const resultado =
+        document.createElement(
+          "div"
+        );
+
+      resultado.className =
+        "resultado-premio";
+
+      const imagen =
+        document.createElement(
+          "img"
+        );
+
+      imagen.className =
+        "imagen-premio-rasca";
+
+      imagen.src =
+        premioActual.imagen;
+
+      imagen.alt =
+        premioActual.titulo;
+
+      const titulo =
+        document.createElement(
+          "div"
+        );
+
+      titulo.className =
+        "titulo-premio-rasca";
+
+      titulo.textContent =
+        premioActual.titulo;
+
+      const mensaje =
+        document.createElement(
+          "p"
+        );
+
+      mensaje.className =
+        "mensaje-premio-rasca";
+
+      mensaje.textContent =
+        premioActual.mensaje;
+
+      const codigo =
+        document.createElement(
+          "div"
+        );
+
+      codigo.className =
+        "codigo-premio-rasca";
+
+      codigo.textContent =
+        "Código PP-" +
+        String(
+          participante
+        ).padStart(
+          4,
+          "0"
+        );
+
+      resultado.append(
+        imagen,
+        titulo,
+        mensaje,
+        codigo
+      );
+
+      rascaPremio.appendChild(
+        resultado
+      );
+
+      if (
+        rascaEstado
+      ) {
+
+        rascaEstado.textContent =
+          premioActual.especial
+            ? "🎉 ¡Premio especial! Presenta tu código para reclamarlo."
+            : premioActual.mensaje;
+      }
+
+      actualizarCabecera();
+
+      crearConfeti();
+
+      vibrar();
+    }
 
 
     rascaCanvas.addEventListener(
@@ -1436,15 +1761,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (
           tarjetaTerminada
         ) {
-
           return;
-
         }
-
 
         rascando =
           true;
 
+        ultimoPunto =
+          null;
+
+        rascaCanvas.classList.add(
+          "rascando"
+        );
 
         try {
 
@@ -1454,11 +1782,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (_) {}
 
-
-        borrar(
-          evento
-        );
-
+        borrar(evento);
       }
     );
 
@@ -1467,39 +1791,43 @@ document.addEventListener("DOMContentLoaded", () => {
       "pointermove",
       evento => {
 
-        if (
-          rascando
-        ) {
-
-          borrar(
-            evento
-          );
-
+        if (rascando) {
+          borrar(evento);
         }
-
       }
     );
+
+
+    function terminarRaspado(
+      evento
+    ) {
+
+      rascando =
+        false;
+
+      ultimoPunto =
+        null;
+
+      rascaCanvas.classList.remove(
+        "rascando"
+      );
+
+      try {
+
+        rascaCanvas.releasePointerCapture(
+          evento.pointerId
+        );
+
+      } catch (_) {}
+
+      comprobarRascado();
+    }
 
 
     rascaCanvas.addEventListener(
       "pointerup",
-      evento => {
-
-        rascando =
-          false;
-
-
-        try {
-
-          rascaCanvas.releasePointerCapture(
-            evento.pointerId
-          );
-
-        } catch (_) {}
-
-      }
+      terminarRaspado
     );
-
 
     rascaCanvas.addEventListener(
       "pointercancel",
@@ -1508,13 +1836,14 @@ document.addEventListener("DOMContentLoaded", () => {
         rascando =
           false;
 
+        ultimoPunto =
+          null;
+
+        rascaCanvas.classList.remove(
+          "rascando"
+        );
       }
     );
-
-
-    /* ==================================
-       NUEVA TARJETA
-    ================================== */
 
 
     function nuevaTarjeta() {
@@ -1522,39 +1851,36 @@ document.addEventListener("DOMContentLoaded", () => {
       participante =
         obtenerParticipante();
 
-
       premioActual =
         obtenerPremio(
           participante
         );
 
-
       tarjetaTerminada =
         false;
-
 
       rascando =
         false;
 
+      ultimoPunto =
+        null;
+
+      porcentajeActual =
+        0;
 
       prepararPremioOculto();
-
 
       if (
         rascaEstado
       ) {
 
         rascaEstado.textContent =
-          "Desliza el dedo o el mouse para descubrir tu premio.";
-
+          "Raspa la superficie con el dedo o el mouse para descubrir tu premio.";
       }
-
 
       actualizarCabecera();
 
-
       prepararRascaSiVisible();
-
     }
 
 
@@ -1566,14 +1892,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "click",
         nuevaTarjeta
       );
-
     }
-
-
-    /* ==================================
-       PREPARAR RASCA SOLO CUANDO
-       LA SECCIÓN ESTÁ VISIBLE
-    ================================== */
 
 
     function prepararRascaSiVisible() {
@@ -1583,26 +1902,19 @@ document.addEventListener("DOMContentLoaded", () => {
           "rasca-gana"
         );
 
-
       if (
         !seccionRasca
       ) {
-
         return;
-
       }
-
 
       if (
         !seccionRasca.classList.contains(
           "vista-activa"
         )
       ) {
-
         return;
-
       }
-
 
       requestAnimationFrame(
         () => {
@@ -1615,22 +1927,12 @@ document.addEventListener("DOMContentLoaded", () => {
               ) {
 
                 prepararCanvas();
-
               }
-
             }
           );
-
         }
       );
-
     }
-
-
-    /* ==================================
-       DETECTAR CUANDO ENTRAMOS
-       A RASCA Y GANA
-    ================================== */
 
 
     const observadorRasca =
@@ -1638,7 +1940,6 @@ document.addEventListener("DOMContentLoaded", () => {
         () => {
 
           prepararRascaSiVisible();
-
         }
       );
 
@@ -1647,7 +1948,6 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById(
         "rasca-gana"
       );
-
 
     if (
       seccionRasca
@@ -1660,12 +1960,9 @@ document.addEventListener("DOMContentLoaded", () => {
             true,
 
           attributeFilter:
-            [
-              "class"
-            ]
+            ["class"]
         }
       );
-
     }
 
 
@@ -1676,13 +1973,7 @@ document.addEventListener("DOMContentLoaded", () => {
     prepararRascaSiVisible();
 
 
-    /* ==================================
-       REDIMENSIONAR
-    ================================== */
-
-
     let temporizadorResize;
-
 
     window.addEventListener(
       "resize",
@@ -1692,22 +1983,732 @@ document.addEventListener("DOMContentLoaded", () => {
           temporizadorResize
         );
 
-
         temporizadorResize =
           setTimeout(
-            prepararRascaSiVisible,
-            200
-          );
+            () => {
 
+              if (
+                !tarjetaTerminada
+              ) {
+
+                prepararRascaSiVisible();
+              }
+
+            },
+            250
+          );
       }
     );
-
   }
 
 
-  /* =========================
+  /* =====================================================
+     RULETA
+  ===================================================== */
+
+  const ruletaCanvas =
+    document.getElementById(
+      "ruleta-canvas"
+    );
+
+  const ruletaGirar =
+    document.getElementById(
+      "ruleta-girar"
+    );
+
+  const ruletaResultado =
+    document.getElementById(
+      "ruleta-resultado"
+    );
+
+  const ruletaNumero =
+    document.getElementById(
+      "ruleta-numero"
+    );
+
+
+  if (
+    ruletaCanvas &&
+    ruletaGirar
+  ) {
+
+    const rctx =
+      ruletaCanvas.getContext(
+        "2d"
+      );
+
+    let ruletaAngulo =
+      0;
+
+    let ruletaGirando =
+      false;
+
+    let ruletaParticipante =
+      obtenerParticipante();
+
+
+    function prepararRuleta() {
+
+      const rect =
+        ruletaCanvas.getBoundingClientRect();
+
+      const lado =
+        Math.min(
+          rect.width || 420,
+          520
+        );
+
+      const escala =
+        Math.min(
+          window.devicePixelRatio ||
+            1,
+          2
+        );
+
+      ruletaCanvas.width =
+        lado * escala;
+
+      ruletaCanvas.height =
+        lado * escala;
+
+      rctx.setTransform(
+        escala,
+        0,
+        0,
+        escala,
+        0,
+        0
+      );
+
+      dibujarRuleta(
+        lado / 2,
+        lado / 2,
+        lado * .46
+      );
+    }
+
+
+    function dibujarRuleta(
+      centroX,
+      centroY,
+      radio
+    ) {
+
+      const cantidad =
+        premios.length;
+
+      const segmento =
+        (
+          Math.PI * 2
+        ) /
+        cantidad;
+
+
+      rctx.clearRect(
+        0,
+        0,
+        centroX * 2,
+        centroY * 2
+      );
+
+
+      /* BORDE EXTERIOR */
+
+      rctx.beginPath();
+
+      rctx.arc(
+        centroX,
+        centroY,
+        radio + 10,
+        0,
+        Math.PI * 2
+      );
+
+      rctx.fillStyle =
+        "#111";
+
+      rctx.fill();
+
+      rctx.strokeStyle =
+        "#FFD700";
+
+      rctx.lineWidth =
+        5;
+
+      rctx.stroke();
+
+
+      /* SEGMENTOS */
+
+      for (
+        let i = 0;
+        i < cantidad;
+        i++
+      ) {
+
+        const inicio =
+          ruletaAngulo +
+          i * segmento;
+
+        const fin =
+          inicio +
+          segmento;
+
+
+        rctx.beginPath();
+
+        rctx.moveTo(
+          centroX,
+          centroY
+        );
+
+        rctx.arc(
+          centroX,
+          centroY,
+          radio,
+          inicio,
+          fin
+        );
+
+        rctx.closePath();
+
+
+        rctx.fillStyle =
+          i % 2 === 0
+            ? "#151515"
+            : "#292929";
+
+        rctx.fill();
+
+
+        rctx.strokeStyle =
+          "rgba(255,215,0,.7)";
+
+        rctx.lineWidth =
+          2;
+
+        rctx.stroke();
+
+
+        /* TEXTO */
+
+        const anguloTexto =
+          inicio +
+          segmento / 2;
+
+        const textoRadio =
+          radio * .69;
+
+        const tx =
+          centroX +
+          Math.cos(
+            anguloTexto
+          ) *
+          textoRadio;
+
+        const ty =
+          centroY +
+          Math.sin(
+            anguloTexto
+          ) *
+          textoRadio;
+
+
+        rctx.save();
+
+        rctx.translate(
+          tx,
+          ty
+        );
+
+        rctx.rotate(
+          anguloTexto +
+          Math.PI / 2
+        );
+
+
+        rctx.fillStyle =
+          "#ffffff";
+
+        rctx.font =
+          "800 11px Arial";
+
+        rctx.textAlign =
+          "center";
+
+        rctx.textBaseline =
+          "middle";
+
+
+        let texto =
+          premios[i].titulo;
+
+
+        if (
+          texto.length >
+          19
+        ) {
+
+          texto =
+            texto.substring(
+              0,
+              18
+            ) +
+            "…";
+        }
+
+
+        rctx.fillText(
+          texto,
+          0,
+          0
+        );
+
+        rctx.restore();
+      }
+
+
+      /* CENTRO */
+
+      rctx.beginPath();
+
+      rctx.arc(
+        centroX,
+        centroY,
+        radio * .17,
+        0,
+        Math.PI * 2
+      );
+
+      rctx.fillStyle =
+        "#000";
+
+      rctx.fill();
+
+      rctx.strokeStyle =
+        "#FFD700";
+
+      rctx.lineWidth =
+        4;
+
+      rctx.stroke();
+
+
+      rctx.fillStyle =
+        "#FFD700";
+
+      rctx.font =
+        "900 12px Arial";
+
+      rctx.textAlign =
+        "center";
+
+      rctx.textBaseline =
+        "middle";
+
+      rctx.fillText(
+        "PIERO",
+        centroX,
+        centroY - 7
+      );
+
+      rctx.fillText(
+        "PASTOR",
+        centroX,
+        centroY + 8
+      );
+    }
+
+
+    function obtenerPremioRuleta() {
+
+      const cantidad =
+        premios.length;
+
+      const segmento =
+        (
+          Math.PI * 2
+        ) /
+        cantidad;
+
+
+      /*
+        El puntero está arriba.
+        Calculamos qué segmento queda
+        exactamente debajo del puntero.
+      */
+
+      let angulo =
+        (
+          -
+            Math.PI / 2 -
+            ruletaAngulo
+        ) %
+        (
+          Math.PI * 2
+        );
+
+
+      if (
+        angulo < 0
+      ) {
+        angulo +=
+          Math.PI * 2;
+      }
+
+
+      const indice =
+        Math.floor(
+          angulo /
+          segmento
+        );
+
+
+      return premios[
+        indice
+      ];
+    }
+
+
+    function mostrarResultadoRuleta(
+      premio
+    ) {
+
+      if (
+        !ruletaResultado
+      ) {
+        return;
+      }
+
+
+      ruletaResultado.innerHTML =
+        `
+        <div class="ruleta-premio-resultado">
+
+          <img
+            src="${premio.imagen}"
+            alt="${premio.titulo}"
+          >
+
+          <strong>
+            ${premio.titulo}
+          </strong>
+
+          <span>
+            ${premio.mensaje}
+          </span>
+
+        </div>
+        `;
+    }
+
+
+    function girarRuleta() {
+
+      if (
+        ruletaGirando
+      ) {
+        return;
+      }
+
+
+      ruletaGirando =
+        true;
+
+      ruletaGirar.disabled =
+        true;
+
+
+      ruletaParticipante =
+        obtenerParticipante();
+
+
+      if (
+        ruletaNumero
+      ) {
+
+        ruletaNumero.textContent =
+          "#" +
+          String(
+            ruletaParticipante
+          ).padStart(
+            4,
+            "0"
+          );
+      }
+
+
+      /*
+        Para la ruleta usamos los mismos
+        premios del Rasca.
+
+        Cada 120 participantes:
+        Vale de S/50.
+      */
+
+      const premioEspecial =
+        ruletaParticipante %
+          PREMIO_ESPECIAL_CADA ===
+        0;
+
+
+      const cantidad =
+        premios.length;
+
+      const segmento =
+        (
+          Math.PI * 2
+        ) /
+        cantidad;
+
+
+      let indiceObjetivo;
+
+
+      if (
+        premioEspecial
+      ) {
+
+        /*
+          El Vale S/50 no es un segmento
+          físico de la ruleta porque
+          actualmente la ruleta representa
+          los mismos 9 premios.
+
+          Después de caer en un premio,
+          el sistema puede convertirlo
+          en Vale S/50 en el participante 120.
+        */
+
+        indiceObjetivo =
+          Math.floor(
+            Math.random() *
+            cantidad
+          );
+
+      } else {
+
+        indiceObjetivo =
+          Math.floor(
+            Math.random() *
+            cantidad
+          );
+      }
+
+
+      const vueltas =
+        6 +
+        Math.floor(
+          Math.random() * 3
+        );
+
+
+      const centroSegmento =
+        indiceObjetivo *
+        segmento +
+        segmento / 2;
+
+
+      const anguloObjetivo =
+        -
+          Math.PI / 2 -
+          centroSegmento;
+
+
+      const actual =
+        ruletaAngulo;
+
+
+      const dosPi =
+        Math.PI * 2;
+
+
+      let diferencia =
+        (
+          anguloObjetivo -
+          actual
+        ) %
+        dosPi;
+
+
+      if (
+        diferencia < 0
+      ) {
+
+        diferencia +=
+          dosPi;
+      }
+
+
+      const destino =
+        actual +
+        vueltas * dosPi +
+        diferencia;
+
+
+      const duracion =
+        5200;
+
+
+      const inicio =
+        performance.now();
+
+
+      function animar(
+        tiempo
+      ) {
+
+        const progreso =
+          Math.min(
+            1,
+            (
+              tiempo -
+              inicio
+            ) /
+            duracion
+          );
+
+
+        /*
+          Ease out cúbico
+        */
+
+        const suavizado =
+          1 -
+          Math.pow(
+            1 - progreso,
+            4
+          );
+
+
+        ruletaAngulo =
+          actual +
+          (
+            destino -
+            actual
+          ) *
+          suavizado;
+
+
+        dibujarRuleta(
+          ruletaCanvas.clientWidth / 2,
+          ruletaCanvas.clientHeight / 2,
+          Math.min(
+            ruletaCanvas.clientWidth,
+            ruletaCanvas.clientHeight
+          ) * .46
+        );
+
+
+        if (
+          progreso <
+          1
+        ) {
+
+          requestAnimationFrame(
+            animar
+          );
+
+        } else {
+
+          ruletaAngulo =
+            destino;
+
+          ruletaGirando =
+            false;
+
+          ruletaGirar.disabled =
+            false;
+
+
+          let premio =
+            obtenerPremioRuleta();
+
+
+          /*
+            Premio especial cada 120.
+          */
+
+          if (
+            premioEspecial
+          ) {
+
+            premio = {
+
+              titulo:
+                "VALE S/ 50",
+
+              mensaje:
+                "¡FELICIDADES! Ganaste un Vale de S/ 50.",
+
+              imagen:
+                "rasca/vale-50.jpg",
+
+              especial:
+                true
+            };
+          }
+
+
+          mostrarResultadoRuleta(
+            premio
+          );
+
+
+          try {
+
+            if (
+              "vibrate" in
+              navigator
+            ) {
+
+              navigator.vibrate(
+                [40, 60, 40]
+              );
+            }
+
+          } catch (_) {}
+        }
+      }
+
+
+      requestAnimationFrame(
+        animar
+      );
+    }
+
+
+    ruletaGirar.addEventListener(
+      "click",
+      girarRuleta
+    );
+
+
+    window.addEventListener(
+      "resize",
+      () => {
+
+        if (
+          document.getElementById(
+            "ruleta"
+          )?.classList.contains(
+            "vista-activa"
+          )
+        ) {
+
+          prepararRuleta();
+        }
+      }
+    );
+
+
+    prepararRuleta();
+  }
+
+
+  /* =====================================================
      CONTADOR DE VISITAS
-  ========================= */
+  ===================================================== */
 
   const contadorVisitas =
     document.getElementById(
@@ -1738,9 +2739,7 @@ document.addEventListener("DOMContentLoaded", () => {
       visitas < 0
     ) {
 
-      visitas =
-        0;
-
+      visitas = 0;
     }
 
 
@@ -1757,32 +2756,27 @@ document.addEventListener("DOMContentLoaded", () => {
       visitas.toLocaleString(
         "es-PE"
       );
-
   }
 
 
-  /* =========================
+  /* =====================================================
      FORMULARIO DE CORREO
-     PRUEBA LOCAL
-  ========================= */
+  ===================================================== */
 
   const formularioCorreo =
     document.getElementById(
       "form-correo"
     );
 
-
   const campoCorreo =
     document.getElementById(
       "correo"
     );
 
-
   const aceptaCorreo =
     document.getElementById(
       "acepto-correo"
     );
-
 
   const mensajeCorreo =
     document.getElementById(
@@ -1805,9 +2799,7 @@ document.addEventListener("DOMContentLoaded", () => {
           !campoCorreo ||
           !aceptaCorreo
         ) {
-
           return;
-
         }
 
 
@@ -1815,9 +2807,7 @@ document.addEventListener("DOMContentLoaded", () => {
           !campoCorreo.checkValidity() ||
           !aceptaCorreo.checked
         ) {
-
           return;
-
         }
 
 
@@ -1825,8 +2815,7 @@ document.addEventListener("DOMContentLoaded", () => {
           "pieroPastorCorreos";
 
 
-        let correos =
-          [];
+        let correos = [];
 
 
         try {
@@ -1845,16 +2834,12 @@ document.addEventListener("DOMContentLoaded", () => {
             )
           ) {
 
-            correos =
-              [];
-
+            correos = [];
           }
 
         } catch (_) {
 
-          correos =
-            [];
-
+          correos = [];
         }
 
 
@@ -1873,7 +2858,6 @@ document.addEventListener("DOMContentLoaded", () => {
           correos.push(
             correo
           );
-
         }
 
 
@@ -1891,15 +2875,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
           mensajeCorreo.textContent =
             "Gracias. Tu correo fue registrado.";
-
         }
 
 
         formularioCorreo.reset();
-
       }
     );
-
   }
 
 });

@@ -29,259 +29,8 @@
     href="style.css"
 >
 
-<style>
-/* =====================================================
-   INICIO — HERO + FOTO + ESTADÍSTICAS
-===================================================== */
-
-.hero {
-    width: min(1200px, calc(100% - 80px));
-    min-height: calc(100vh - 120px);
-    margin: 0 auto;
-    padding: 150px 0 70px;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(420px, 1fr);
-    grid-template-rows: auto auto;
-    align-items: center;
-    column-gap: 55px;
-    row-gap: 25px;
-}
-
-.hero-texto {
-    grid-column: 1;
-    grid-row: 1;
-}
-
-.hero-foto {
-    grid-column: 2;
-    grid-row: 1;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0;
-    position: relative;
-    z-index: 3;
-}
-
-.hero-foto img {
-    display: block;
-    width: min(420px, 90%);
-    height: 420px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 6px solid #FFD700;
-    box-shadow: 0 0 25px #FFD700;
-    animation: flotar 4s ease-in-out infinite, brillo 3s ease-in-out infinite;
-}
-
-.inicio-estadisticas {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    width: 100%;
-    max-width: 1050px;
-    margin: 0 auto;
-    padding: 18px 14px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    box-sizing: border-box;
-    border: 1px solid rgba(255,255,255,.12);
-    border-radius: 22px;
-    background: rgba(0,0,0,.30);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-}
-
-.inicio-stat {
-    min-width: 0;
-    padding: 8px 10px;
-    text-align: center;
-    border-right: 1px solid rgba(255,255,255,.10);
-}
-
-.inicio-stat:last-child {
-    border-right: none;
-}
-
-.inicio-stat strong {
-    display: block;
-    color: #fff;
-    font-size: clamp(1.7rem, 3vw, 2.7rem);
-    line-height: 1;
-    font-weight: 800;
-    letter-spacing: -.04em;
-}
-
-.inicio-stat span {
-    display: block;
-    margin-top: 7px;
-    font-size: .76rem;
-    line-height: 1.25;
-    opacity: .78;
-    text-transform: uppercase;
-    letter-spacing: .06em;
-}
-
-@media (max-width: 900px) {
-    .hero {
-        width: min(100% - 36px, 700px);
-        padding: 130px 0 55px;
-        grid-template-columns: 1fr;
-        row-gap: 35px;
-        text-align: center;
-    }
-
-    .hero-texto,
-    .hero-foto,
-    .inicio-estadisticas {
-        grid-column: 1;
-    }
-
-    .hero-texto {
-        grid-row: 1;
-        text-align: center;
-    }
-
-    .hero-foto {
-        grid-row: 2;
-    }
-
-    .inicio-estadisticas {
-        grid-row: 3;
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .inicio-stat:nth-child(2) {
-        border-right: none;
-    }
-
-    .inicio-stat:nth-child(-n+2) {
-        border-bottom: 1px solid rgba(255,255,255,.10);
-        padding-bottom: 14px;
-    }
-
-    .inicio-stat:nth-child(n+3) {
-        padding-top: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero {
-        width: calc(100% - 24px);
-        padding-top: 115px;
-    }
-
-    .hero-foto img {
-        width: 300px;
-        height: 300px;
-    }
-
-    .inicio-estadisticas {
-        gap: 4px;
-        padding: 12px 7px;
-        border-radius: 18px;
-    }
-
-    .inicio-stat {
-        padding: 7px 4px;
-    }
-
-    .inicio-stat span {
-        font-size: .64rem;
-        letter-spacing: .04em;
-    }
-}
-</style>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-
-<style id="ajuste-estadisticas-inicio">
-/* Estadísticas compactas debajo de la fotografía */
-.inicio-estadisticas {
-    grid-column: 2;
-    grid-row: 2;
-    width: min(100%, 620px);
-    margin: -4px auto 0;
-    padding: 10px 8px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    box-sizing: border-box;
-    border: 1px solid rgba(255,255,255,.12);
-    border-radius: 16px;
-    background: rgba(0,0,0,.30);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-.inicio-stat {
-    min-width: 0;
-    padding: 5px 8px;
-    text-align: center;
-    border-right: 1px solid rgba(255,255,255,.10);
-}
-
-.inicio-stat:last-child {
-    border-right: none;
-}
-
-.inicio-stat strong {
-    display: block;
-    font-size: clamp(1.15rem, 2vw, 1.7rem);
-    line-height: 1;
-    font-weight: 800;
-    letter-spacing: -.03em;
-}
-
-.inicio-stat span {
-    display: block;
-    margin-top: 5px;
-    font-size: .62rem;
-    line-height: 1.2;
-    opacity: .78;
-    text-transform: uppercase;
-    letter-spacing: .045em;
-}
-
-@media (max-width: 900px) {
-    .inicio-estadisticas {
-        grid-column: 1 / -1;
-        grid-row: auto;
-        width: min(100%, 700px);
-        margin: 12px auto 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .inicio-estadisticas {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 8px 5px;
-    }
-
-    .inicio-stat:nth-child(2) {
-        border-right: none;
-    }
-
-    .inicio-stat:nth-child(-n+2) {
-        border-bottom: 1px solid rgba(255,255,255,.10);
-        padding-bottom: 9px;
-    }
-
-    .inicio-stat:nth-child(n+3) {
-        padding-top: 9px;
-    }
-
-    .inicio-stat strong {
-        font-size: 1.25rem;
-    }
-
-    .inicio-stat span {
-        font-size: .58rem;
-    }
-}
-</style>
 
 </head>
 
@@ -422,6 +171,12 @@
         </li>
 
         <li>
+            <a href="#ruleta">
+                Ruleta
+            </a>
+        </li>
+
+        <li>
             <a href="#referencias">
                 Referencias
             </a>
@@ -508,36 +263,37 @@
             alt="Piero Pastor - Animador Profesional"
         >
 
+        <div class="inicio-estadisticas" aria-label="Experiencia y trayectoria">
+
+            <div class="inicio-stat">
+                <strong data-inicio-numero="14">0</strong>
+                <span>Años experiencia</span>
+            </div>
+
+            <div class="inicio-stat">
+                <strong data-inicio-numero="8">0</strong>
+                <span>Años educación</span>
+            </div>
+
+            <div class="inicio-stat">
+                <strong data-inicio-numero="2012">0</strong>
+                <span>Desde</span>
+            </div>
+
+            <div class="inicio-stat">
+                <strong data-inicio-numero="2026">0</strong>
+                <span>Actualidad</span>
+            </div>
+
+        </div>
+
     </div>
 
 
 </section>
 
 
-    <!-- ESTADÍSTICAS DESTACADAS DEL INICIO -->
-    <div class="inicio-estadisticas" aria-label="Experiencia y trayectoria">
 
-        <div class="inicio-stat">
-            <strong data-inicio-numero="14">0</strong>
-            <span>Años de experiencia</span>
-        </div>
-
-        <div class="inicio-stat">
-            <strong data-inicio-numero="8">0</strong>
-            <span>Años en educación</span>
-        </div>
-
-        <div class="inicio-stat">
-            <strong data-inicio-numero="2012">0</strong>
-            <span>Inicio profesional</span>
-        </div>
-
-        <div class="inicio-stat">
-            <strong data-inicio-numero="2026">0</strong>
-            <span>Actualidad</span>
-        </div>
-
-    </div>
 
 
 
@@ -790,21 +546,7 @@
 
 
     <div class="docente-intro">
-
-        <div>
-
-            <strong class="numero-grande">
-                8+
-            </strong>
-
-            <span>
-                años de experiencia educativa
-            </span>
-
-        </div>
-
-
-        <p>
+<p>
 
             Docente Profesional con más de
             8 años de experiencia en el campo
@@ -1452,6 +1194,78 @@
 
 
 <!-- =====================================================
+     RULETA INTERACTIVA
+===================================================== -->
+
+<section
+    id="ruleta"
+    class="vista seccion ruleta-seccion"
+>
+
+    <span class="seccion-etiqueta">
+        JUEGO INTERACTIVO
+    </span>
+
+    <h2>
+        Ruleta de Premios
+    </h2>
+
+    <p class="intro-seccion">
+        Gira la ruleta y descubre uno de los premios de Piero Pastor.
+    </p>
+
+    <div class="ruleta-reglas">
+        <span>✓ Una participación por giro</span>
+        <span>✓ Mismos premios del Rasca &amp; Gana</span>
+        <span>✓ Vale de S/ 50 cada 120 participantes</span>
+    </div>
+
+    <div class="ruleta-contenedor">
+
+        <div class="ruleta-cabecera">
+            <div>
+                <span>PARTICIPANTE</span>
+                <strong id="ruleta-numero">#0001</strong>
+            </div>
+            <div>
+                <span>ESTADO</span>
+                <strong id="ruleta-estado-cabecera">LISTO</strong>
+            </div>
+        </div>
+
+        <div class="ruleta-escenario">
+            <div class="ruleta-puntero" aria-hidden="true"></div>
+            <canvas id="ruleta-canvas" width="520" height="520" aria-label="Ruleta interactiva de premios"></canvas>
+            <div class="ruleta-centro">
+                <span>PIERO</span>
+                <strong>PASTOR</strong>
+            </div>
+        </div>
+
+        <p class="ruleta-estado" id="ruleta-estado">
+            Presiona "GIRAR RULETA" para participar.
+        </p>
+
+        <button class="ruleta-girar" id="ruleta-girar" type="button">
+            GIRAR RULETA
+        </button>
+
+        <button class="ruleta-reset" id="ruleta-reset" type="button">
+            Nueva participación
+        </button>
+
+        <div class="ruleta-resultado" id="ruleta-resultado" aria-live="polite">
+            <img id="ruleta-premio-imagen" src="rasca/cerveza.jpg" alt="Premio de la ruleta" hidden>
+            <strong id="ruleta-premio-titulo">LISTO PARA GIRAR</strong>
+            <span id="ruleta-premio-mensaje">Tu premio aparecerá aquí.</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
      RASCA Y GANA
 ===================================================== -->
 
@@ -1485,7 +1299,7 @@
         </span>
 
         <span>
-            ✓ Premio especial cada 40 participantes
+            ✓ Vale de S/ 50 cada 120 participantes
         </span>
 
         <span>
@@ -1494,6 +1308,8 @@
 
     </div>
 
+
+    <div class="rasca-juego-layout">
 
     <div class="rasca-contenedor">
 
@@ -1587,8 +1403,7 @@
 
     </div>
 
-
-    <!-- QR DEBAJO DEL JUEGO -->
+    <!-- QR AL LADO DERECHO DEL JUEGO -->
 
     <div class="rasca-qr-box">
 
@@ -1608,7 +1423,7 @@
 
     </div>
 
-</section>
+    </div></section>
 
 
 
@@ -1901,6 +1716,7 @@
             <a href="#experiencias">Experiencias</a>
             <a href="#videos">Videos</a>
             <a href="#rasca-gana">Rasca y Gana</a>
+            <a href="#ruleta">Ruleta</a>
             <a href="#referencias">Referencias</a>
             <a href="#contacto">Contacto</a>
 
