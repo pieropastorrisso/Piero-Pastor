@@ -48,10 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const inicio = document.getElementById("inicio");
 
       if (inicio) {
-        vistas.forEach(v =>
-          v.classList.remove("vista-activa")
-        );
-
+        vistas.forEach(v => v.classList.remove("vista-activa"));
         inicio.classList.add("vista-activa");
       }
 
@@ -59,20 +56,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    vistas.forEach(v =>
-      v.classList.remove("vista-activa")
-    );
-
+    vistas.forEach(v => v.classList.remove("vista-activa"));
     destino.classList.add("vista-activa");
 
     cerrarMenu();
 
     if (actualizarHash) {
-      history.replaceState(
-        null,
-        "",
-        "#" + id
-      );
+      history.replaceState(null, "", "#" + id);
     }
 
     window.scrollTo({
@@ -81,107 +71,64 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (id === "rasca-gana") {
-      setTimeout(
-        prepararRascaSiVisible,
-        100
-      );
-    }
-
-    if (id === "ruleta") {
-      setTimeout(
-        prepararRuleta,
-        100
-      );
+      setTimeout(prepararRascaSiVisible, 100);
     }
   }
 
   function activarVistaDesdeHash() {
-    const id =
-      window.location.hash
-        .replace(/^#/, "")
-        .trim();
+    const id = window.location.hash
+      .replace(/^#/, "")
+      .trim();
 
-    activarVista(
-      id || "inicio",
-      false
-    );
+    activarVista(id || "inicio", false);
   }
 
   if (menuToggle) {
-    menuToggle.addEventListener(
-      "click",
-      e => {
-        e.stopPropagation();
-        abrirCerrarMenu();
-      }
-    );
+    menuToggle.addEventListener("click", e => {
+      e.stopPropagation();
+      abrirCerrarMenu();
+    });
   }
 
   document
     .querySelectorAll('a[href^="#"]')
     .forEach(enlace => {
+      enlace.addEventListener("click", e => {
+        const href = enlace.getAttribute("href");
 
-      enlace.addEventListener(
-        "click",
-        e => {
+        if (!href || href === "#") return;
 
-          const href =
-            enlace.getAttribute("href");
+        const id = href.substring(1);
+        const destino = document.getElementById(id);
 
-          if (
-            !href ||
-            href === "#"
-          ) {
-            return;
-          }
-
-          const id =
-            href.substring(1);
-
-          const destino =
-            document.getElementById(id);
-
-          if (
-            !destino ||
-            !destino.classList.contains("vista")
-          ) {
-            return;
-          }
-
-          e.preventDefault();
-
-          activarVista(
-            id,
-            true
-          );
+        if (
+          !destino ||
+          !destino.classList.contains("vista")
+        ) {
+          return;
         }
-      );
+
+        e.preventDefault();
+        activarVista(id, true);
+      });
     });
 
-  document.addEventListener(
-    "click",
-    e => {
-
-      if (
-        menu &&
-        menuToggle &&
-        !menu.contains(e.target) &&
-        !menuToggle.contains(e.target)
-      ) {
-        cerrarMenu();
-      }
+  document.addEventListener("click", e => {
+    if (
+      menu &&
+      menuToggle &&
+      !menu.contains(e.target) &&
+      !menuToggle.contains(e.target)
+    ) {
+      cerrarMenu();
     }
-  );
+  });
 
-  document.addEventListener(
-    "keydown",
-    e => {
-
-      if (e.key === "Escape") {
-        cerrarMenu();
-      }
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+      cerrarMenu();
     }
-  );
+  });
 
   window.addEventListener(
     "hashchange",
@@ -196,143 +143,101 @@ document.addEventListener("DOMContentLoaded", () => {
   ===================================================== */
 
   const experiencias = {
-
     1: {
-      titulo:
-        'Con Brayan Kamus "Cantante"',
+      titulo: 'Con Brayan Kamus "Cantante"',
       descripcion:
         "Presentación y experiencia profesional en Clínica del Corazón.",
-      imagen:
-        "img/galeria/foto1.jpeg",
+      imagen: "img/galeria/foto1.jpeg",
       video: ""
     },
 
     2: {
-      titulo:
-        "Evento en Monalisa Club Ica",
+      titulo: "Evento en Monalisa Club Ica",
       descripcion:
         "Animación y conducción en Monalisa Club Ica.",
-      imagen:
-        "img/galeria/foto2.jpeg",
+      imagen: "img/galeria/foto2.jpeg",
       video: ""
     },
 
     3: {
-      titulo:
-        "Graduación Contabilidad USJB",
+      titulo: "Graduación Contabilidad USJB",
       descripcion:
         "Maestro de ceremonias en una graduación realizada en Chincha.",
-      imagen:
-        "img/galeria/foto3.jpeg",
+      imagen: "img/galeria/foto3.jpeg",
       video: ""
     },
 
     4: {
-      titulo:
-        'Con Deisy Araujo "Vedette"',
+      titulo: 'Con Deisy Araujo "Vedette"',
       descripcion:
         "Participación en la inauguración de Clínica del Corazón.",
-      imagen:
-        "img/galeria/foto4.jpeg",
+      imagen: "img/galeria/foto4.jpeg",
       video: ""
     },
 
     5: {
-      titulo:
-        'Artista Invitada: "Anna Paz"',
+      titulo: 'Artista Invitada: "Anna Paz"',
       descripcion:
         "Presentación y participación en evento realizado en Clínica.",
-      imagen:
-        "img/galeria/foto5.jpeg",
+      imagen: "img/galeria/foto5.jpeg",
       video: ""
     },
 
     6: {
-      titulo:
-        "Celebración Familiar",
+      titulo: "Celebración Familiar",
       descripcion:
         "Animación y participación en la celebración del 50 aniversario de Raúl Pastor.",
-      imagen:
-        "img/galeria/foto6.jpeg",
+      imagen: "img/galeria/foto6.jpeg",
       video: ""
     }
   };
 
   const modal =
-    document.getElementById(
-      "modal-experiencia"
-    );
+    document.getElementById("modal-experiencia");
 
   const modalImagen =
-    document.getElementById(
-      "modal-imagen"
-    );
+    document.getElementById("modal-imagen");
 
   const modalTitulo =
-    document.getElementById(
-      "modal-titulo"
-    );
+    document.getElementById("modal-titulo");
 
   const modalDescripcion =
-    document.getElementById(
-      "modal-descripcion"
-    );
+    document.getElementById("modal-descripcion");
 
   const modalVideoLink =
-    document.getElementById(
-      "modal-video-link"
-    );
+    document.getElementById("modal-video-link");
 
   const modalCerrar =
-    document.getElementById(
-      "modal-cerrar"
-    );
+    document.getElementById("modal-cerrar");
 
   const modalOverlay =
-    document.querySelector(
-      ".modal-overlay"
-    );
+    document.querySelector(".modal-overlay");
 
   function cerrarExperiencia() {
-
     if (!modal) return;
 
-    modal.classList.remove(
-      "activo"
-    );
+    modal.classList.remove("activo");
 
     modal.setAttribute(
       "aria-hidden",
       "true"
     );
 
-    document.body.style.overflow =
-      "";
+    document.body.style.overflow = "";
   }
 
   function abrirExperiencia(id) {
+    const experiencia = experiencias[id];
 
-    const experiencia =
-      experiencias[id];
-
-    if (
-      !modal ||
-      !experiencia
-    ) {
-      return;
-    }
+    if (!modal || !experiencia) return;
 
     if (modalImagen) {
-      modalImagen.src =
-        experiencia.imagen;
-
-      modalImagen.alt =
-        experiencia.titulo;
+      modalImagen.src = experiencia.imagen;
+      modalImagen.alt = experiencia.titulo;
     }
 
     if (modalTitulo) {
-      modalTitulo.textContent =
-        experiencia.titulo;
+      modalTitulo.textContent = experiencia.titulo;
     }
 
     if (modalDescripcion) {
@@ -341,58 +246,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (modalVideoLink) {
-
       if (experiencia.video) {
-
-        modalVideoLink.hidden =
-          false;
-
-        modalVideoLink.href =
-          experiencia.video;
-
+        modalVideoLink.hidden = false;
+        modalVideoLink.href = experiencia.video;
       } else {
-
-        modalVideoLink.hidden =
-          true;
-
-        modalVideoLink.removeAttribute(
-          "href"
-        );
+        modalVideoLink.hidden = true;
+        modalVideoLink.removeAttribute("href");
       }
     }
 
-    modal.classList.add(
-      "activo"
-    );
+    modal.classList.add("activo");
 
     modal.setAttribute(
       "aria-hidden",
       "false"
     );
 
-    document.body.style.overflow =
-      "hidden";
+    document.body.style.overflow = "hidden";
   }
 
   document
-    .querySelectorAll(
-      ".experiencia-card"
-    )
+    .querySelectorAll(".experiencia-card")
     .forEach(card => {
-
-      card.addEventListener(
-        "click",
-        () => {
-
-          abrirExperiencia(
-            card.dataset.experiencia
-          );
-        }
-      );
+      card.addEventListener("click", () => {
+        abrirExperiencia(
+          card.dataset.experiencia
+        );
+      });
     });
 
   if (modalCerrar) {
-
     modalCerrar.addEventListener(
       "click",
       cerrarExperiencia
@@ -400,184 +283,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (modalOverlay) {
-
     modalOverlay.addEventListener(
       "click",
       cerrarExperiencia
     );
   }
 
-  document.addEventListener(
-    "keydown",
-    e => {
-
-      if (
-        e.key === "Escape" &&
-        modal &&
-        modal.classList.contains(
-          "activo"
-        )
-      ) {
-        cerrarExperiencia();
-      }
-    }
-  );
-
-
-  /* =====================================================
-     PREMIOS COMPARTIDOS
-     RASCA + RULETA
-  ===================================================== */
-
-  const premios = [
-
-    {
-      titulo: "1 CERVEZA",
-      mensaje:
-        "¡Te tocó 1 cerveza!",
-      imagen:
-        "rasca/cerveza.jpg"
-    },
-
-    {
-      titulo: "1 AGUA",
-      mensaje:
-        "¡Te tocó 1 agua!",
-      imagen:
-        "rasca/agua.jpg"
-    },
-
-    {
-      titulo: "1 POLO",
-      mensaje:
-        "¡Te tocó 1 polo!",
-      imagen:
-        "rasca/polo.jpg"
-    },
-
-    {
-      titulo: "1 GORRO",
-      mensaje:
-        "¡Te tocó 1 gorro!",
-      imagen:
-        "rasca/gorro.jpg"
-    },
-
-    {
-      titulo: "1 VOLT",
-      mensaje:
-        "¡Te tocó 1 Volt!",
-      imagen:
-        "rasca/volt.jpg"
-    },
-
-    {
-      titulo: "CASTIGO",
-      mensaje:
-        "¡Te tocó castigo!",
-      imagen:
-        "rasca/castigo.jpg"
-    },
-
-    {
-      titulo: "SIGUE INTENTANDO",
-      mensaje:
-        "¡Sigue intentando!",
-      imagen:
-        "rasca/sigue-intentando.jpg"
-    },
-
-    {
-      titulo:
-        "2 PEDIDOS MUSICALES",
-      mensaje:
-        "¡Ganaste 2 pedidos musicales!",
-      imagen:
-        "rasca/musical.jpg"
-    },
-
-    {
-      titulo:
-        "1 BESO DEL ANIMADOR",
-      mensaje:
-        "¡Te tocó 1 beso del animador!",
-      imagen:
-        "rasca/beso.jpg"
-    }
-  ];
-
-
-  /* =====================================================
-     CONTADOR GENERAL DE PARTICIPANTES
-  ===================================================== */
-
-  const CLAVE_CONTADOR =
-    "pieroPastorRascaParticipantes";
-
-  const PREMIO_ESPECIAL_CADA =
-    120;
-
-  function obtenerParticipante() {
-
-    let numero =
-      Number(
-        localStorage.getItem(
-          CLAVE_CONTADOR
-        ) || 0
-      );
-
+  document.addEventListener("keydown", e => {
     if (
-      !Number.isFinite(numero) ||
-      numero < 0
+      e.key === "Escape" &&
+      modal &&
+      modal.classList.contains("activo")
     ) {
-      numero = 0;
+      cerrarExperiencia();
     }
-
-    numero++;
-
-    localStorage.setItem(
-      CLAVE_CONTADOR,
-      String(numero)
-    );
-
-    return numero;
-  }
-
-  function obtenerPremio(numero) {
-
-    if (
-      numero %
-        PREMIO_ESPECIAL_CADA ===
-      0
-    ) {
-
-      return {
-
-        titulo:
-          "VALE S/ 50",
-
-        mensaje:
-          "¡FELICIDADES! Ganaste un Vale de S/ 50.",
-
-        imagen:
-          "rasca/vale-50.jpg",
-
-        especial:
-          true
-      };
-    }
-
-    return {
-
-      ...premios[
-        (numero - 1) %
-        premios.length
-      ],
-
-      especial:
-        false
-    };
-  }
+  });
 
 
   /* =====================================================
@@ -585,18 +305,13 @@ document.addEventListener("DOMContentLoaded", () => {
   ===================================================== */
 
   const contenedorQR =
-    document.getElementById(
-      "rasca-qr"
-    );
+    document.getElementById("rasca-qr");
 
   if (
     contenedorQR &&
-    typeof QRCode !==
-      "undefined"
+    typeof QRCode !== "undefined"
   ) {
-
-    contenedorQR.innerHTML =
-      "";
+    contenedorQR.innerHTML = "";
 
     const urlQR =
       window.location.origin +
@@ -607,17 +322,10 @@ document.addEventListener("DOMContentLoaded", () => {
       contenedorQR,
       {
         text: urlQR,
-
         width: 150,
-
         height: 150,
-
-        colorDark:
-          "#000000",
-
-        colorLight:
-          "#ffffff",
-
+        colorDark: "#000000",
+        colorLight: "#ffffff",
         correctLevel:
           QRCode.CorrectLevel.H
       }
@@ -626,28 +334,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =====================================================
-     RASCA Y GANA
+     RASCA Y GANA — SISTEMA MEJORADO
   ===================================================== */
 
   const rascaCanvas =
-    document.getElementById(
-      "rasca-canvas"
-    );
+    document.getElementById("rasca-canvas");
 
   const rascaPremio =
-    document.getElementById(
-      "rasca-premio"
-    );
+    document.getElementById("rasca-premio");
 
   const rascaNumero =
-    document.getElementById(
-      "rasca-numero"
-    );
+    document.getElementById("rasca-numero");
 
   const rascaEstado =
-    document.getElementById(
-      "rasca-estado"
-    );
+    document.getElementById("rasca-estado");
 
   const rascaEstadoCabecera =
     document.getElementById(
@@ -655,9 +355,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
   const rascaReset =
-    document.getElementById(
-      "rasca-reset"
-    );
+    document.getElementById("rasca-reset");
 
 
   if (
@@ -669,22 +367,171 @@ document.addEventListener("DOMContentLoaded", () => {
       rascaCanvas.getContext(
         "2d",
         {
-          willReadFrequently:
-            true
+          willReadFrequently: true
         }
       );
 
-    const UMBRAL_RASCADO =
-      85;
+    const CLAVE_CONTADOR =
+      "pieroPastorRascaParticipantes";
 
-    const BRUSH_MIN =
-      20;
+    const UMBRAL_RASCADO = 85;
 
-    const BRUSH_MAX =
-      36;
+    const PREMIO_ESPECIAL_CADA = 120;
 
-    const CHECK_INTERVAL =
-      120;
+    const BRUSH_MIN = 20;
+
+    const BRUSH_MAX = 36;
+
+    const CHECK_INTERVAL = 120;
+
+
+    /* =================================================
+       PREMIOS
+    ================================================= */
+
+    const premios = [
+
+      {
+        titulo: "1 CERVEZA",
+        mensaje:
+          "¡Te tocó 1 cerveza!",
+        imagen:
+          "rasca/cerveza.jpg"
+      },
+
+      {
+        titulo: "1 AGUA",
+        mensaje:
+          "¡Te tocó 1 agua!",
+        imagen:
+          "rasca/agua.jpg"
+      },
+
+      {
+        titulo: "1 POLO",
+        mensaje:
+          "¡Te tocó 1 polo!",
+        imagen:
+          "rasca/polo.jpg"
+      },
+
+      {
+        titulo: "1 GORRO",
+        mensaje:
+          "¡Te tocó 1 gorro!",
+        imagen:
+          "rasca/gorro.jpg"
+      },
+
+      {
+        titulo: "1 VOLT",
+        mensaje:
+          "¡Te tocó 1 Volt!",
+        imagen:
+          "rasca/volt.jpg"
+      },
+
+      {
+        titulo: "CASTIGO",
+        mensaje:
+          "¡Te tocó castigo!",
+        imagen:
+          "rasca/castigo.jpg"
+      },
+
+      {
+        titulo: "SIGUE INTENTANDO",
+        mensaje:
+          "¡Sigue intentando!",
+        imagen:
+          "rasca/sigue-intentando.jpg"
+      },
+
+      {
+        titulo: "2 PEDIDOS MUSICALES",
+        mensaje:
+          "¡Ganaste 2 pedidos musicales!",
+        imagen:
+          "rasca/musical.jpg"
+      },
+
+      {
+        titulo: "1 BESO DEL ANIMADOR",
+        mensaje:
+          "¡Te tocó 1 beso del animador!",
+        imagen:
+          "rasca/beso.jpg"
+      }
+
+    ];
+
+
+    /* =================================================
+       PARTICIPANTES
+    ================================================= */
+
+    function obtenerParticipante() {
+
+      let numero =
+        Number(
+          localStorage.getItem(
+            CLAVE_CONTADOR
+          ) || 0
+        );
+
+      if (
+        !Number.isFinite(numero) ||
+        numero < 0
+      ) {
+        numero = 0;
+      }
+
+      numero++;
+
+      localStorage.setItem(
+        CLAVE_CONTADOR,
+        String(numero)
+      );
+
+      return numero;
+    }
+
+
+    /* =================================================
+       PREMIO
+    ================================================= */
+
+    function obtenerPremio(numero) {
+
+      if (
+        numero %
+          PREMIO_ESPECIAL_CADA ===
+        0
+      ) {
+
+        return {
+          titulo: "VALE S/ 50",
+
+          mensaje:
+            "¡FELICIDADES! Ganaste un Vale de S/ 50.",
+
+          imagen:
+            "rasca/vale-50.jpg",
+
+          especial: true
+        };
+      }
+
+      return {
+        ...premios[
+          (numero - 1) %
+          premios.length
+        ],
+
+        especial: false
+      };
+    }
+
 
     let participante =
       obtenerParticipante();
@@ -694,11 +541,9 @@ document.addEventListener("DOMContentLoaded", () => {
         participante
       );
 
-    let rascando =
-      false;
+    let rascando = false;
 
-    let tarjetaTerminada =
-      false;
+    let tarjetaTerminada = false;
 
     let anchoCanvas = 0;
 
@@ -714,6 +559,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let ultimoSonido = 0;
 
+
+    /* =================================================
+       CABECERA
+    ================================================= */
 
     function actualizarCabecera() {
 
@@ -745,6 +594,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /* =================================================
+       PREMIO OCULTO
+    ================================================= */
+
     function prepararPremioOculto() {
 
       rascaPremio.className =
@@ -753,23 +606,17 @@ document.addEventListener("DOMContentLoaded", () => {
       rascaPremio.innerHTML =
         `
         <div class="rasca-premio-oculto">
-
-          <span>
-            PIERO PASTOR
-          </span>
-
-          <strong>
-            PREMIO OCULTO
-          </strong>
-
-          <small>
-            RASCA PARA DESCUBRIR
-          </small>
-
+          <span>PIERO PASTOR</span>
+          <strong>PREMIO OCULTO</strong>
+          <small>RASCA PARA DESCUBRIR</small>
         </div>
         `;
     }
 
+
+    /* =================================================
+       TEXTURA METÁLICA
+    ================================================= */
 
     function crearTexturaMetalica() {
 
@@ -784,6 +631,7 @@ document.addEventListener("DOMContentLoaded", () => {
           anchoCanvas,
           altoCanvas
         );
+
 
       base.addColorStop(
         0,
@@ -825,8 +673,10 @@ document.addEventListener("DOMContentLoaded", () => {
         "#3c3c3c"
       );
 
+
       ctx.fillStyle =
         base;
+
 
       ctx.fillRect(
         0,
@@ -838,11 +688,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const brillo =
         ctx.createLinearGradient(
-          -anchoCanvas * .3,
+          -anchoCanvas * 0.3,
           altoCanvas,
           anchoCanvas * 1.3,
           -altoCanvas
         );
+
 
       brillo.addColorStop(
         0,
@@ -850,17 +701,17 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       brillo.addColorStop(
-        .43,
+        0.43,
         "rgba(255,255,255,.08)"
       );
 
       brillo.addColorStop(
-        .5,
+        0.5,
         "rgba(255,255,255,.32)"
       );
 
       brillo.addColorStop(
-        .57,
+        0.57,
         "rgba(255,255,255,.08)"
       );
 
@@ -869,8 +720,10 @@ document.addEventListener("DOMContentLoaded", () => {
         "rgba(255,255,255,0)"
       );
 
+
       ctx.fillStyle =
         brillo;
+
 
       ctx.fillRect(
         0,
@@ -908,11 +761,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const radio =
           Math.random() *
           1.1 +
-          .15;
+          0.15;
 
         const claro =
           Math.random() >
-          .5;
+          0.5;
+
 
         ctx.fillStyle =
           claro
@@ -923,7 +777,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 Math.random() * .14
               })`;
 
+
         ctx.beginPath();
+
 
         ctx.arc(
           x,
@@ -932,6 +788,7 @@ document.addEventListener("DOMContentLoaded", () => {
           0,
           Math.PI * 2
         );
+
 
         ctx.fill();
       }
@@ -942,11 +799,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
       ctx.lineWidth = 1;
 
+
       ctx.strokeRect(
         10,
         10,
         anchoCanvas - 20,
         altoCanvas - 20
+      );
+
+
+      ctx.strokeStyle =
+        "rgba(0,0,0,.3)";
+
+      ctx.lineWidth = 2;
+
+
+      ctx.strokeRect(
+        5,
+        5,
+        anchoCanvas - 10,
+        altoCanvas - 10
       );
 
 
@@ -956,6 +828,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ctx.textBaseline =
         "middle";
 
+
       ctx.shadowColor =
         "rgba(0,0,0,.5)";
 
@@ -963,11 +836,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       ctx.shadowOffsetY = 2;
 
+
       ctx.fillStyle =
         "#ffffff";
 
+
       ctx.font =
         "900 30px Arial";
+
 
       ctx.fillText(
         "RASCA AQUÍ",
@@ -975,8 +851,10 @@ document.addEventListener("DOMContentLoaded", () => {
         altoCanvas / 2 - 12
       );
 
+
       ctx.font =
         "800 14px Arial";
+
 
       ctx.fillText(
         "PIERO PASTOR",
@@ -984,22 +862,43 @@ document.addEventListener("DOMContentLoaded", () => {
         altoCanvas / 2 + 25
       );
 
+
       ctx.shadowColor =
         "transparent";
 
       ctx.shadowBlur = 0;
 
       ctx.shadowOffsetY = 0;
+
+
+      ctx.fillStyle =
+        "rgba(0,0,0,.35)";
+
+
+      ctx.font =
+        "700 10px Arial";
+
+
+      ctx.fillText(
+        "DESCUBRE TU PREMIO",
+        anchoCanvas / 2,
+        altoCanvas / 2 + 57
+      );
     }
 
 
+    /* =================================================
+       PREPARAR CANVAS
+    ================================================= */
+
     function prepararCanvas() {
 
-      if (!rascaCanvas)
-        return;
+      if (!rascaCanvas) return;
+
 
       const rect =
         rascaCanvas.getBoundingClientRect();
+
 
       if (
         rect.width < 20 ||
@@ -1008,18 +907,21 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+
       anchoCanvas =
         rect.width;
+
 
       altoCanvas =
         rect.height;
 
+
       const escala =
         Math.min(
-          window.devicePixelRatio ||
-            1,
+          window.devicePixelRatio || 1,
           2
         );
+
 
       rascaCanvas.width =
         Math.floor(
@@ -1027,11 +929,13 @@ document.addEventListener("DOMContentLoaded", () => {
           escala
         );
 
+
       rascaCanvas.height =
         Math.floor(
           altoCanvas *
           escala
         );
+
 
       ctx.setTransform(
         escala,
@@ -1042,28 +946,50 @@ document.addEventListener("DOMContentLoaded", () => {
         0
       );
 
+
       rascaCanvas.style.opacity =
         "1";
+
 
       rascaCanvas.style.pointerEvents =
         "auto";
 
+
       crearTexturaMetalica();
+
 
       ultimoPunto =
         null;
 
+
       porcentajeActual =
         0;
+
+
+      if (
+        rascaEstado
+      ) {
+
+        rascaEstado.classList.remove(
+          "progreso"
+        );
+
+
+        rascaEstado.textContent =
+          "Raspa la superficie con el dedo o el mouse para descubrir tu premio.";
+      }
     }
 
 
-    function obtenerPosicion(
-      evento
-    ) {
+    /* =================================================
+       POSICIÓN DEL PUNTERO
+    ================================================= */
+
+    function obtenerPosicion(evento) {
 
       const rect =
         rascaCanvas.getBoundingClientRect();
+
 
       return {
 
@@ -1074,14 +1000,16 @@ document.addEventListener("DOMContentLoaded", () => {
         y:
           evento.clientY -
           rect.top
+
       };
     }
 
 
-    function distancia(
-      a,
-      b
-    ) {
+    /* =================================================
+       DISTANCIA
+    ================================================= */
+
+    function distancia(a, b) {
 
       return Math.hypot(
         a.x - b.x,
@@ -1089,6 +1017,10 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     }
 
+
+    /* =================================================
+       RASPADO CONTINUO
+    ================================================= */
 
     function dibujarSegmento(
       inicio,
@@ -1102,6 +1034,7 @@ document.addEventListener("DOMContentLoaded", () => {
           fin
         );
 
+
       const pasos =
         Math.max(
           1,
@@ -1109,10 +1042,11 @@ document.addEventListener("DOMContentLoaded", () => {
             distanciaTotal /
             Math.max(
               4,
-              radio * .35
+              radio * 0.35
             )
           )
         );
+
 
       ctx.globalCompositeOperation =
         "destination-out";
@@ -1127,6 +1061,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const t =
           i / pasos;
 
+
         const x =
           inicio.x +
           (
@@ -1134,6 +1069,7 @@ document.addEventListener("DOMContentLoaded", () => {
             inicio.x
           ) *
           t;
+
 
         const y =
           inicio.y +
@@ -1143,15 +1079,17 @@ document.addEventListener("DOMContentLoaded", () => {
           ) *
           t;
 
+
         const pincel =
           ctx.createRadialGradient(
             x,
             y,
-            radio * .05,
+            radio * 0.05,
             x,
             y,
             radio
           );
+
 
         pincel.addColorStop(
           0,
@@ -1159,12 +1097,12 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         pincel.addColorStop(
-          .68,
+          0.68,
           "rgba(0,0,0,.95)"
         );
 
         pincel.addColorStop(
-          .9,
+          0.9,
           "rgba(0,0,0,.55)"
         );
 
@@ -1173,10 +1111,13 @@ document.addEventListener("DOMContentLoaded", () => {
           "rgba(0,0,0,0)"
         );
 
+
         ctx.fillStyle =
           pincel;
 
+
         ctx.beginPath();
+
 
         ctx.arc(
           x,
@@ -1186,13 +1127,19 @@ document.addEventListener("DOMContentLoaded", () => {
           Math.PI * 2
         );
 
+
         ctx.fill();
       }
+
 
       ctx.globalCompositeOperation =
         "source-over";
     }
 
+
+    /* =================================================
+       PARTÍCULAS
+    ================================================= */
 
     function crearParticulas(
       x,
@@ -1204,8 +1151,9 @@ document.addEventListener("DOMContentLoaded", () => {
           ".rasca-tarjeta"
         );
 
-      if (!tarjeta)
-        return;
+
+      if (!tarjeta) return;
+
 
       for (
         let i = 0;
@@ -1218,42 +1166,53 @@ document.addEventListener("DOMContentLoaded", () => {
             "span"
           );
 
+
         particula.className =
           "rasca-particula";
+
 
         particula.style.left =
           `${x}px`;
 
+
         particula.style.top =
           `${y}px`;
+
 
         particula.style.setProperty(
           "--dx",
           `${(Math.random() - .5) * 30}px`
         );
 
+
         particula.style.setProperty(
           "--dy",
           `${-Math.random() * 25 - 5}px`
         );
 
+
         tarjeta.appendChild(
           particula
         );
 
+
         setTimeout(
-          () =>
-            particula.remove(),
+          () => particula.remove(),
           650
         );
       }
     }
 
 
+    /* =================================================
+       SONIDO DE RASPADO
+    ================================================= */
+
     function sonidoRaspado() {
 
       const ahora =
         performance.now();
+
 
       if (
         ahora -
@@ -1263,12 +1222,16 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+
       ultimoSonido =
         ahora;
 
+
       try {
 
-        if (!sonidoContexto) {
+        if (
+          !sonidoContexto
+        ) {
 
           sonidoContexto =
             new (
@@ -1276,6 +1239,7 @@ document.addEventListener("DOMContentLoaded", () => {
               window.webkitAudioContext
             )();
         }
+
 
         if (
           sonidoContexto.state ===
@@ -1285,8 +1249,10 @@ document.addEventListener("DOMContentLoaded", () => {
           sonidoContexto.resume();
         }
 
+
         const duracion =
-          .035;
+          0.035;
+
 
         const buffer =
           sonidoContexto.createBuffer(
@@ -1298,10 +1264,12 @@ document.addEventListener("DOMContentLoaded", () => {
             sonidoContexto.sampleRate
           );
 
+
         const data =
           buffer.getChannelData(
             0
           );
+
 
         for (
           let i = 0;
@@ -1311,73 +1279,100 @@ document.addEventListener("DOMContentLoaded", () => {
 
           data[i] =
             (
-              Math.random() * 2 -
+              Math.random() *
+              2 -
               1
             ) *
             (
               1 -
-              i / data.length
+              i /
+              data.length
             );
         }
+
 
         const fuente =
           sonidoContexto
             .createBufferSource();
 
+
         const filtro =
           sonidoContexto
             .createBiquadFilter();
+
 
         const ganancia =
           sonidoContexto
             .createGain();
 
+
         fuente.buffer =
           buffer;
 
+
         filtro.type =
           "bandpass";
+
 
         filtro.frequency.value =
           1800 +
           Math.random() *
           1000;
 
+
+        filtro.Q.value =
+          0.7;
+
+
         ganancia.gain.setValueAtTime(
-          .018,
+          0.018,
           sonidoContexto.currentTime
         );
 
+
         ganancia.gain.exponentialRampToValueAtTime(
-          .001,
+          0.001,
           sonidoContexto.currentTime +
           duracion
         );
+
 
         fuente.connect(
           filtro
         );
 
+
         filtro.connect(
           ganancia
         );
+
 
         ganancia.connect(
           sonidoContexto.destination
         );
 
+
         fuente.start();
 
-      } catch (_) {}
+      } catch (_) {
+
+        /* Sonido opcional */
+
+      }
     }
 
+
+    /* =================================================
+       VIBRACIÓN
+    ================================================= */
 
     function vibrar() {
 
       try {
 
         if (
-          "vibrate" in navigator
+          "vibrate" in
+          navigator
         ) {
 
           navigator.vibrate(
@@ -1386,30 +1381,38 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
       } catch (_) {}
+
     }
 
 
-    function borrar(
-      evento
-    ) {
+    /* =================================================
+       RASPAR
+    ================================================= */
+
+    function borrar(evento) {
 
       if (
         !rascando ||
         tarjetaTerminada
       ) {
+
         return;
       }
+
 
       if (
         evento.cancelable
       ) {
+
         evento.preventDefault();
       }
+
 
       const posicion =
         obtenerPosicion(
           evento
         );
+
 
       const radio =
         Math.max(
@@ -1419,9 +1422,11 @@ document.addEventListener("DOMContentLoaded", () => {
             Math.min(
               anchoCanvas,
               altoCanvas
-            ) * .035
+            ) *
+            0.035
           )
         );
+
 
       if (
         !ultimoPunto
@@ -1431,21 +1436,26 @@ document.addEventListener("DOMContentLoaded", () => {
           posicion;
       }
 
+
       dibujarSegmento(
         ultimoPunto,
         posicion,
         radio
       );
 
+
       ultimoPunto =
         posicion;
+
 
       crearParticulas(
         posicion.x,
         posicion.y
       );
 
+
       sonidoRaspado();
+
 
       if (
         evento.pointerType ===
@@ -1455,8 +1465,10 @@ document.addEventListener("DOMContentLoaded", () => {
         vibrar();
       }
 
+
       const ahora =
         performance.now();
+
 
       if (
         ahora -
@@ -1467,18 +1479,20 @@ document.addEventListener("DOMContentLoaded", () => {
         ultimoChequeo =
           ahora;
 
+
         comprobarRascado();
       }
     }
-
+        /* =================================================
+       COMPROBAR PORCENTAJE
+    ================================================= */
 
     function comprobarRascado() {
 
-      if (
-        tarjetaTerminada
-      ) {
+      if (tarjetaTerminada) {
         return;
       }
+
 
       const ancho =
         rascaCanvas.width;
@@ -1486,7 +1500,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const alto =
         rascaCanvas.height;
 
+
       let datos;
+
 
       try {
 
@@ -1503,11 +1519,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      let transparentes =
-        0;
 
-      let total =
-        0;
+      let transparentes = 0;
+
+      let total = 0;
+
 
       const paso =
         Math.max(
@@ -1519,6 +1535,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ) / 150
           )
         );
+
 
       for (
         let y = 0;
@@ -1542,17 +1559,19 @@ document.addEventListener("DOMContentLoaded", () => {
             4 +
             3;
 
+
           total++;
+
 
           if (
             datos[indice] <
             80
           ) {
-
             transparentes++;
           }
         }
       }
+
 
       porcentajeActual =
         total
@@ -1562,6 +1581,29 @@ document.addEventListener("DOMContentLoaded", () => {
             ) *
             100
           : 0;
+
+
+      if (
+        rascaEstado &&
+        porcentajeActual > 1
+      ) {
+
+        rascaEstado.classList.add(
+          "progreso"
+        );
+
+
+        rascaEstado.textContent =
+          `Rascado: ${
+            Math.min(
+              100,
+              Math.round(
+                porcentajeActual
+              )
+            )
+          }% · Sigue raspando para descubrir tu premio.`;
+      }
+
 
       if (
         porcentajeActual >=
@@ -1573,6 +1615,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /* =================================================
+       CONFETI
+    ================================================= */
+
     function crearConfeti() {
 
       const tarjeta =
@@ -1580,8 +1626,8 @@ document.addEventListener("DOMContentLoaded", () => {
           ".rasca-tarjeta"
         );
 
-      if (!tarjeta)
-        return;
+      if (!tarjeta) return;
+
 
       for (
         let i = 0;
@@ -1594,37 +1640,51 @@ document.addEventListener("DOMContentLoaded", () => {
             "span"
           );
 
+
         pieza.className =
           "rasca-confeti";
+
 
         pieza.style.left =
           "50%";
 
+
         pieza.style.top =
           "45%";
+
 
         pieza.style.setProperty(
           "--dx",
           `${(Math.random() - .5) * 420}px`
         );
 
+
         pieza.style.setProperty(
           "--dy",
           `${(Math.random() - .5) * 300}px`
         );
 
+
+        pieza.style.animationDelay =
+          `${Math.random() * .2}s`;
+
+
         tarjeta.appendChild(
           pieza
         );
 
+
         setTimeout(
-          () =>
-            pieza.remove(),
+          () => pieza.remove(),
           1500
         );
       }
     }
 
+
+    /* =================================================
+       MOSTRAR PREMIO
+    ================================================= */
 
     function mostrarPremio() {
 
@@ -1634,24 +1694,31 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+
       tarjetaTerminada =
         true;
+
 
       rascando =
         false;
 
+
       ultimoPunto =
         null;
+
 
       rascaCanvas.classList.remove(
         "rascando"
       );
 
+
       rascaCanvas.style.opacity =
         "0";
 
+
       rascaCanvas.style.pointerEvents =
         "none";
+
 
       rascaPremio.className =
         "rasca-premio " +
@@ -1661,60 +1728,90 @@ document.addEventListener("DOMContentLoaded", () => {
             : ""
         );
 
+
       rascaPremio.innerHTML =
         "";
+
 
       const resultado =
         document.createElement(
           "div"
         );
 
+
       resultado.className =
         "resultado-premio";
+
 
       const imagen =
         document.createElement(
           "img"
         );
 
+
       imagen.className =
         "imagen-premio-rasca";
+
 
       imagen.src =
         premioActual.imagen;
 
+
       imagen.alt =
         premioActual.titulo;
+
+
+      imagen.loading =
+        "eager";
+
+
+      imagen.onerror =
+        () => {
+
+          console.warn(
+            "No se encontró:",
+            premioActual.imagen
+          );
+        };
+
 
       const titulo =
         document.createElement(
           "div"
         );
 
+
       titulo.className =
         "titulo-premio-rasca";
 
+
       titulo.textContent =
         premioActual.titulo;
+
 
       const mensaje =
         document.createElement(
           "p"
         );
 
+
       mensaje.className =
         "mensaje-premio-rasca";
 
+
       mensaje.textContent =
         premioActual.mensaje;
+
 
       const codigo =
         document.createElement(
           "div"
         );
 
+
       codigo.className =
         "codigo-premio-rasca";
+
 
       codigo.textContent =
         "Código PP-" +
@@ -1725,6 +1822,7 @@ document.addEventListener("DOMContentLoaded", () => {
           "0"
         );
 
+
       resultado.append(
         imagen,
         titulo,
@@ -1732,19 +1830,25 @@ document.addEventListener("DOMContentLoaded", () => {
         codigo
       );
 
+
       rascaPremio.appendChild(
         resultado
       );
 
-      if (
-        rascaEstado
-      ) {
+
+      if (rascaEstado) {
+
+        rascaEstado.classList.remove(
+          "progreso"
+        );
+
 
         rascaEstado.textContent =
           premioActual.especial
             ? "🎉 ¡Premio especial! Presenta tu código para reclamarlo."
             : premioActual.mensaje;
       }
+
 
       actualizarCabecera();
 
@@ -1753,6 +1857,10 @@ document.addEventListener("DOMContentLoaded", () => {
       vibrar();
     }
 
+
+    /* =================================================
+       POINTER DOWN
+    ================================================= */
 
     rascaCanvas.addEventListener(
       "pointerdown",
@@ -1764,15 +1872,19 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
+
         rascando =
           true;
+
 
         ultimoPunto =
           null;
 
+
         rascaCanvas.classList.add(
           "rascando"
         );
+
 
         try {
 
@@ -1782,21 +1894,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (_) {}
 
+
         borrar(evento);
       }
     );
 
+
+    /* =================================================
+       POINTER MOVE
+    ================================================= */
 
     rascaCanvas.addEventListener(
       "pointermove",
       evento => {
 
         if (rascando) {
+
           borrar(evento);
         }
       }
     );
 
+
+    /* =================================================
+       POINTER UP
+    ================================================= */
 
     function terminarRaspado(
       evento
@@ -1805,12 +1927,15 @@ document.addEventListener("DOMContentLoaded", () => {
       rascando =
         false;
 
+
       ultimoPunto =
         null;
+
 
       rascaCanvas.classList.remove(
         "rascando"
       );
+
 
       try {
 
@@ -1820,6 +1945,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       } catch (_) {}
 
+
       comprobarRascado();
     }
 
@@ -1828,6 +1954,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "pointerup",
       terminarRaspado
     );
+
 
     rascaCanvas.addEventListener(
       "pointercancel",
@@ -1846,37 +1973,52 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
+    /* =================================================
+       NUEVA TARJETA
+    ================================================= */
+
     function nuevaTarjeta() {
 
       participante =
         obtenerParticipante();
+
 
       premioActual =
         obtenerPremio(
           participante
         );
 
+
       tarjetaTerminada =
         false;
+
 
       rascando =
         false;
 
+
       ultimoPunto =
         null;
+
 
       porcentajeActual =
         0;
 
+
       prepararPremioOculto();
 
-      if (
-        rascaEstado
-      ) {
+
+      if (rascaEstado) {
+
+        rascaEstado.classList.remove(
+          "progreso"
+        );
+
 
         rascaEstado.textContent =
           "Raspa la superficie con el dedo o el mouse para descubrir tu premio.";
       }
+
 
       actualizarCabecera();
 
@@ -1884,9 +2026,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    if (
-      rascaReset
-    ) {
+    if (rascaReset) {
 
       rascaReset.addEventListener(
         "click",
@@ -1895,6 +2035,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /* =================================================
+       PREPARAR RASCA
+    ================================================= */
+
     function prepararRascaSiVisible() {
 
       const seccionRasca =
@@ -1902,11 +2046,13 @@ document.addEventListener("DOMContentLoaded", () => {
           "rasca-gana"
         );
 
+
       if (
         !seccionRasca
       ) {
         return;
       }
+
 
       if (
         !seccionRasca.classList.contains(
@@ -1915,6 +2061,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ) {
         return;
       }
+
 
       requestAnimationFrame(
         () => {
@@ -1935,6 +2082,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /* =================================================
+       OBSERVADOR
+    ================================================= */
+
     const observadorRasca =
       new MutationObserver(
         () => {
@@ -1949,6 +2100,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "rasca-gana"
       );
 
+
     if (
       seccionRasca
     ) {
@@ -1956,15 +2108,18 @@ document.addEventListener("DOMContentLoaded", () => {
       observadorRasca.observe(
         seccionRasca,
         {
-          attributes:
-            true,
-
-          attributeFilter:
-            ["class"]
+          attributes: true,
+          attributeFilter: [
+            "class"
+          ]
         }
       );
     }
 
+
+    /* =================================================
+       INICIALIZAR
+    ================================================= */
 
     prepararPremioOculto();
 
@@ -1973,7 +2128,12 @@ document.addEventListener("DOMContentLoaded", () => {
     prepararRascaSiVisible();
 
 
+    /* =================================================
+       REDIMENSIONAR
+    ================================================= */
+
     let temporizadorResize;
+
 
     window.addEventListener(
       "resize",
@@ -1982,6 +2142,7 @@ document.addEventListener("DOMContentLoaded", () => {
         clearTimeout(
           temporizadorResize
         );
+
 
         temporizadorResize =
           setTimeout(
@@ -2003,28 +2164,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =====================================================
-     RULETA
+     RULETA INTERACTIVA
   ===================================================== */
 
   const ruletaCanvas =
-    document.getElementById(
-      "ruleta-canvas"
-    );
+    document.getElementById("ruleta-canvas");
 
   const ruletaGirar =
-    document.getElementById(
-      "ruleta-girar"
-    );
+    document.getElementById("ruleta-girar");
 
-  const ruletaResultado =
-    document.getElementById(
-      "ruleta-resultado"
-    );
+  const ruletaReset =
+    document.getElementById("ruleta-reset");
 
   const ruletaNumero =
-    document.getElementById(
-      "ruleta-numero"
-    );
+    document.getElementById("ruleta-numero");
+
+  const ruletaEstadoCabecera =
+    document.getElementById("ruleta-estado-cabecera");
+
+  const ruletaEstado =
+    document.getElementById("ruleta-estado");
+
+  const ruletaResultadoImagen =
+    document.getElementById("ruleta-premio-imagen");
+
+  const ruletaResultadoTitulo =
+    document.getElementById("ruleta-premio-titulo");
+
+  const ruletaResultadoMensaje =
+    document.getElementById("ruleta-premio-mensaje");
 
 
   if (
@@ -2032,10 +2200,142 @@ document.addEventListener("DOMContentLoaded", () => {
     ruletaGirar
   ) {
 
-    const rctx =
-      ruletaCanvas.getContext(
-        "2d"
+    const ruletaCtx =
+      ruletaCanvas.getContext("2d");
+
+    const CLAVE_RULETA =
+      "pieroPastorRuletaParticipantes";
+
+    const INTERVALO_VALE_RULETA =
+      120;
+
+
+    /* =================================================
+       PREMIOS
+    ================================================= */
+
+    const premiosRuleta = [
+
+      {
+        titulo:
+          "1 CERVEZA",
+
+        mensaje:
+          "¡Te tocó 1 cerveza!",
+
+        imagen:
+          "rasca/cerveza.jpg"
+      },
+
+      {
+        titulo:
+          "1 AGUA",
+
+        mensaje:
+          "¡Te tocó 1 agua!",
+
+        imagen:
+          "rasca/agua.jpg"
+      },
+
+      {
+        titulo:
+          "1 POLO",
+
+        mensaje:
+          "¡Te tocó 1 polo!",
+
+        imagen:
+          "rasca/polo.jpg"
+      },
+
+      {
+        titulo:
+          "1 GORRO",
+
+        mensaje:
+          "¡Te tocó 1 gorro!",
+
+        imagen:
+          "rasca/gorro.jpg"
+      },
+
+      {
+        titulo:
+          "1 VOLT",
+
+        mensaje:
+          "¡Te tocó 1 Volt!",
+
+        imagen:
+          "rasca/volt.jpg"
+      },
+
+      {
+        titulo:
+          "CASTIGO",
+
+        mensaje:
+          "¡Te tocó castigo!",
+
+        imagen:
+          "rasca/castigo.jpg"
+      },
+
+      {
+        titulo:
+          "SIGUE INTENTANDO",
+
+        mensaje:
+          "¡Sigue intentando!",
+
+        imagen:
+          "rasca/sigue-intentando.jpg"
+      },
+
+      {
+        titulo:
+          "2 PEDIDOS MUSICALES",
+
+        mensaje:
+          "¡Ganaste 2 pedidos musicales!",
+
+        imagen:
+          "rasca/musical.jpg"
+      },
+
+      {
+        titulo:
+          "1 BESO DEL ANIMADOR",
+
+        mensaje:
+          "¡Te tocó 1 beso del animador!",
+
+        imagen:
+          "rasca/beso.jpg"
+      }
+
+    ];
+
+
+    /* =================================================
+       CARGAR IMÁGENES
+    ================================================= */
+
+    const imagenesRuleta =
+      premiosRuleta.map(
+        premio => {
+
+          const imagen =
+            new Image();
+
+          imagen.src =
+            premio.imagen;
+
+          return imagen;
+        }
       );
+
 
     let ruletaAngulo =
       0;
@@ -2044,384 +2344,52 @@ document.addEventListener("DOMContentLoaded", () => {
       false;
 
     let ruletaParticipante =
-      obtenerParticipante();
+      0;
 
 
-    function prepararRuleta() {
+    /* =================================================
+       PARTICIPANTE
+    ================================================= */
 
-      const rect =
-        ruletaCanvas.getBoundingClientRect();
+    function obtenerParticipanteRuleta() {
 
-      const lado =
-        Math.min(
-          rect.width || 420,
-          520
-        );
-
-      const escala =
-        Math.min(
-          window.devicePixelRatio ||
-            1,
-          2
-        );
-
-      ruletaCanvas.width =
-        lado * escala;
-
-      ruletaCanvas.height =
-        lado * escala;
-
-      rctx.setTransform(
-        escala,
-        0,
-        0,
-        escala,
-        0,
-        0
-      );
-
-      dibujarRuleta(
-        lado / 2,
-        lado / 2,
-        lado * .46
-      );
-    }
-
-
-    function dibujarRuleta(
-      centroX,
-      centroY,
-      radio
-    ) {
-
-      const cantidad =
-        premios.length;
-
-      const segmento =
-        (
-          Math.PI * 2
-        ) /
-        cantidad;
-
-
-      rctx.clearRect(
-        0,
-        0,
-        centroX * 2,
-        centroY * 2
-      );
-
-
-      /* BORDE EXTERIOR */
-
-      rctx.beginPath();
-
-      rctx.arc(
-        centroX,
-        centroY,
-        radio + 10,
-        0,
-        Math.PI * 2
-      );
-
-      rctx.fillStyle =
-        "#111";
-
-      rctx.fill();
-
-      rctx.strokeStyle =
-        "#FFD700";
-
-      rctx.lineWidth =
-        5;
-
-      rctx.stroke();
-
-
-      /* SEGMENTOS */
-
-      for (
-        let i = 0;
-        i < cantidad;
-        i++
-      ) {
-
-        const inicio =
-          ruletaAngulo +
-          i * segmento;
-
-        const fin =
-          inicio +
-          segmento;
-
-
-        rctx.beginPath();
-
-        rctx.moveTo(
-          centroX,
-          centroY
-        );
-
-        rctx.arc(
-          centroX,
-          centroY,
-          radio,
-          inicio,
-          fin
-        );
-
-        rctx.closePath();
-
-
-        rctx.fillStyle =
-          i % 2 === 0
-            ? "#151515"
-            : "#292929";
-
-        rctx.fill();
-
-
-        rctx.strokeStyle =
-          "rgba(255,215,0,.7)";
-
-        rctx.lineWidth =
-          2;
-
-        rctx.stroke();
-
-
-        /* TEXTO */
-
-        const anguloTexto =
-          inicio +
-          segmento / 2;
-
-        const textoRadio =
-          radio * .69;
-
-        const tx =
-          centroX +
-          Math.cos(
-            anguloTexto
-          ) *
-          textoRadio;
-
-        const ty =
-          centroY +
-          Math.sin(
-            anguloTexto
-          ) *
-          textoRadio;
-
-
-        rctx.save();
-
-        rctx.translate(
-          tx,
-          ty
-        );
-
-        rctx.rotate(
-          anguloTexto +
-          Math.PI / 2
-        );
-
-
-        rctx.fillStyle =
-          "#ffffff";
-
-        rctx.font =
-          "800 11px Arial";
-
-        rctx.textAlign =
-          "center";
-
-        rctx.textBaseline =
-          "middle";
-
-
-        let texto =
-          premios[i].titulo;
-
-
-        if (
-          texto.length >
-          19
-        ) {
-
-          texto =
-            texto.substring(
-              0,
-              18
-            ) +
-            "…";
-        }
-
-
-        rctx.fillText(
-          texto,
-          0,
-          0
-        );
-
-        rctx.restore();
-      }
-
-
-      /* CENTRO */
-
-      rctx.beginPath();
-
-      rctx.arc(
-        centroX,
-        centroY,
-        radio * .17,
-        0,
-        Math.PI * 2
-      );
-
-      rctx.fillStyle =
-        "#000";
-
-      rctx.fill();
-
-      rctx.strokeStyle =
-        "#FFD700";
-
-      rctx.lineWidth =
-        4;
-
-      rctx.stroke();
-
-
-      rctx.fillStyle =
-        "#FFD700";
-
-      rctx.font =
-        "900 12px Arial";
-
-      rctx.textAlign =
-        "center";
-
-      rctx.textBaseline =
-        "middle";
-
-      rctx.fillText(
-        "PIERO",
-        centroX,
-        centroY - 7
-      );
-
-      rctx.fillText(
-        "PASTOR",
-        centroX,
-        centroY + 8
-      );
-    }
-
-
-    function obtenerPremioRuleta() {
-
-      const cantidad =
-        premios.length;
-
-      const segmento =
-        (
-          Math.PI * 2
-        ) /
-        cantidad;
-
-
-      /*
-        El puntero está arriba.
-        Calculamos qué segmento queda
-        exactamente debajo del puntero.
-      */
-
-      let angulo =
-        (
-          -
-            Math.PI / 2 -
-            ruletaAngulo
-        ) %
-        (
-          Math.PI * 2
+      let numero =
+        Number(
+          localStorage.getItem(
+            CLAVE_RULETA
+          ) || 0
         );
 
 
       if (
-        angulo < 0
+        !Number.isFinite(
+          numero
+        ) ||
+        numero < 0
       ) {
-        angulo +=
-          Math.PI * 2;
+
+        numero = 0;
       }
 
 
-      const indice =
-        Math.floor(
-          angulo /
-          segmento
-        );
+      numero++;
 
 
-      return premios[
-        indice
-      ];
+      localStorage.setItem(
+        CLAVE_RULETA,
+        String(numero)
+      );
+
+
+      return numero;
     }
 
 
-    function mostrarResultadoRuleta(
-      premio
-    ) {
+    /* =================================================
+       CABECERA
+    ================================================= */
 
-      if (
-        !ruletaResultado
-      ) {
-        return;
-      }
-
-
-      ruletaResultado.innerHTML =
-        `
-        <div class="ruleta-premio-resultado">
-
-          <img
-            src="${premio.imagen}"
-            alt="${premio.titulo}"
-          >
-
-          <strong>
-            ${premio.titulo}
-          </strong>
-
-          <span>
-            ${premio.mensaje}
-          </span>
-
-        </div>
-        `;
-    }
-
-
-    function girarRuleta() {
-
-      if (
-        ruletaGirando
-      ) {
-        return;
-      }
-
-
-      ruletaGirando =
-        true;
-
-      ruletaGirar.disabled =
-        true;
-
-
-      ruletaParticipante =
-        obtenerParticipante();
-
+    function actualizarRuletaCabecera() {
 
       if (
         ruletaNumero
@@ -2438,216 +2406,647 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
 
-      /*
-        Para la ruleta usamos los mismos
-        premios del Rasca.
+      if (
+        ruletaEstadoCabecera
+      ) {
 
-        Cada 120 participantes:
-        Vale de S/50.
-      */
+        ruletaEstadoCabecera.textContent =
+          ruletaGirando
+            ? "GIRANDO"
+            : "LISTO";
+      }
+    }
 
-      const premioEspecial =
-        ruletaParticipante %
-          PREMIO_ESPECIAL_CADA ===
-        0;
 
+    /* =================================================
+       TEXTO DE PREMIOS
+    ================================================= */
+
+    function abreviarPremio(
+      titulo
+    ) {
+
+      const mapa = {
+
+        "1 CERVEZA":
+          "CERVEZA",
+
+        "1 AGUA":
+          "AGUA",
+
+        "1 POLO":
+          "POLO",
+
+        "1 GORRO":
+          "GORRO",
+
+        "1 VOLT":
+          "VOLT",
+
+        "CASTIGO":
+          "CASTIGO",
+
+        "SIGUE INTENTANDO":
+          "SIGUE\nINTENTANDO",
+
+        "2 PEDIDOS MUSICALES":
+          "2 PEDIDOS\nMUSICALES",
+
+        "1 BESO DEL ANIMADOR":
+          "BESO\nDEL ANIMADOR"
+
+      };
+
+
+      return (
+        mapa[titulo] ||
+        titulo
+      );
+    }
+
+
+    /* =================================================
+       DIBUJAR RULETA
+    ================================================= */
+
+    function dibujarRuleta() {
+
+      const w =
+        ruletaCanvas.width;
+
+      const h =
+        ruletaCanvas.height;
+
+      const cx =
+        w / 2;
+
+      const cy =
+        h / 2;
+
+      const radio =
+        Math.min(
+          w,
+          h
+        ) / 2 -
+        12;
 
       const cantidad =
-        premios.length;
+        premiosRuleta.length;
 
-      const segmento =
+      const paso =
         (
           Math.PI * 2
         ) /
         cantidad;
 
 
-      let indiceObjetivo;
+      const colores = [
 
+        "#161719",
+        "#27230f",
+        "#111214",
+        "#332b0d",
+        "#18191b",
+        "#29230f",
+        "#121315",
+        "#362d0b",
+        "#1b1c1e"
+
+      ];
+
+
+      ruletaCtx.clearRect(
+        0,
+        0,
+        w,
+        h
+      );
+
+
+      ruletaCtx.save();
+
+
+      ruletaCtx.translate(
+        cx,
+        cy
+      );
+
+
+      ruletaCtx.rotate(
+        -Math.PI / 2
+      );
+
+
+      premiosRuleta.forEach(
+        (
+          premio,
+          indice
+        ) => {
+
+          const inicio =
+            indice *
+            paso;
+
+          const fin =
+            inicio +
+            paso;
+
+          const medio =
+            inicio +
+            paso / 2;
+
+
+          const gradiente =
+            ruletaCtx.createRadialGradient(
+              0,
+              0,
+              radio * .1,
+              0,
+              0,
+              radio
+            );
+
+
+          gradiente.addColorStop(
+            0,
+            "#45410e"
+          );
+
+
+          gradiente.addColorStop(
+            .45,
+            colores[indice]
+          );
+
+
+          gradiente.addColorStop(
+            1,
+            "#070707"
+          );
+
+
+          ruletaCtx.beginPath();
+
+
+          ruletaCtx.moveTo(
+            0,
+            0
+          );
+
+
+          ruletaCtx.arc(
+            0,
+            0,
+            radio,
+            inicio,
+            fin
+          );
+
+
+          ruletaCtx.closePath();
+
+
+          ruletaCtx.fillStyle =
+            gradiente;
+
+
+          ruletaCtx.fill();
+
+
+          ruletaCtx.strokeStyle =
+            "rgba(255,212,0,.75)";
+
+
+          ruletaCtx.lineWidth =
+            3;
+
+
+          ruletaCtx.stroke();
+
+
+          /* ==========================================
+             IMAGEN
+          ========================================== */
+
+          const ix =
+            Math.cos(medio) *
+            radio *
+            .57;
+
+
+          const iy =
+            Math.sin(medio) *
+            radio *
+            .57;
+
+
+          const imagen =
+            imagenesRuleta[
+              indice
+            ];
+
+
+          if (
+            imagen.complete &&
+            imagen.naturalWidth > 0
+          ) {
+
+            ruletaCtx.save();
+
+
+            ruletaCtx.beginPath();
+
+
+            ruletaCtx.arc(
+              ix,
+              iy,
+              42,
+              0,
+              Math.PI * 2
+            );
+
+
+            ruletaCtx.clip();
+
+
+            ruletaCtx.drawImage(
+              imagen,
+              ix - 42,
+              iy - 42,
+              84,
+              84
+            );
+
+
+            ruletaCtx.restore();
+
+
+            ruletaCtx.beginPath();
+
+
+            ruletaCtx.arc(
+              ix,
+              iy,
+              42,
+              0,
+              Math.PI * 2
+            );
+
+
+            ruletaCtx.strokeStyle =
+              "#ffd400";
+
+
+            ruletaCtx.lineWidth =
+              3;
+
+
+            ruletaCtx.stroke();
+
+          }
+
+
+          /* ==========================================
+             TEXTO
+          ========================================== */
+
+          ruletaCtx.save();
+
+
+          ruletaCtx.translate(
+            Math.cos(medio) *
+              radio *
+              .84,
+
+            Math.sin(medio) *
+              radio *
+              .84
+          );
+
+
+          ruletaCtx.rotate(
+            medio +
+            Math.PI / 2
+          );
+
+
+          ruletaCtx.fillStyle =
+            "#fff";
+
+
+          ruletaCtx.font =
+            "900 13px Arial";
+
+
+          ruletaCtx.textAlign =
+            "center";
+
+
+          ruletaCtx.textBaseline =
+            "middle";
+
+
+          const lineas =
+            abreviarPremio(
+              premio.titulo
+            ).split("\n");
+
+
+          lineas.forEach(
+            (
+              linea,
+              i
+            ) => {
+
+              ruletaCtx.fillText(
+                linea,
+                0,
+                (
+                  i -
+                  (
+                    lineas.length -
+                    1
+                  ) /
+                  2
+                ) *
+                15
+              );
+
+            }
+          );
+
+
+          ruletaCtx.restore();
+
+        }
+      );
+
+
+      ruletaCtx.restore();
+
+
+      /* ==========================================
+         BORDE
+      ========================================== */
+
+      ruletaCtx.beginPath();
+
+
+      ruletaCtx.arc(
+        cx,
+        cy,
+        radio,
+        0,
+        Math.PI * 2
+      );
+
+
+      ruletaCtx.strokeStyle =
+        "#ffd400";
+
+
+      ruletaCtx.lineWidth =
+        10;
+
+
+      ruletaCtx.stroke();
+    }
+
+
+    /* =================================================
+       CARGAR IMÁGENES
+    ================================================= */
+
+    imagenesRuleta.forEach(
+      imagen => {
+
+        imagen.addEventListener(
+          "load",
+          dibujarRuleta,
+          {
+            once: true
+          }
+        );
+
+      }
+    );
+
+
+    dibujarRuleta();
+
+
+    /* =================================================
+       SELECCIONAR PREMIO
+    ================================================= */
+
+    function seleccionarPremio(
+      numero
+    ) {
 
       if (
-        premioEspecial
+        numero %
+          INTERVALO_VALE_RULETA ===
+        0
       ) {
 
-        /*
-          El Vale S/50 no es un segmento
-          físico de la ruleta porque
-          actualmente la ruleta representa
-          los mismos 9 premios.
+        return {
 
-          Después de caer en un premio,
-          el sistema puede convertirlo
-          en Vale S/50 en el participante 120.
-        */
+          titulo:
+            "VALE S/ 50",
 
-        indiceObjetivo =
-          Math.floor(
-            Math.random() *
-            cantidad
-          );
+          mensaje:
+            "¡FELICIDADES! Ganaste un Vale de S/ 50.",
 
-      } else {
+          imagen:
+            "rasca/vale-50.jpg",
 
-        indiceObjetivo =
-          Math.floor(
-            Math.random() *
-            cantidad
-          );
+          especial:
+            true,
+
+          indice:
+            Math.floor(
+              Math.random() *
+              premiosRuleta.length
+            )
+
+        };
+
       }
 
 
+      const indice =
+        Math.floor(
+          Math.random() *
+          premiosRuleta.length
+        );
+
+
+      return {
+
+        ...premiosRuleta[
+          indice
+        ],
+
+        especial:
+          false,
+
+        indice
+
+      };
+    }
+
+
+    /* =================================================
+       MOSTRAR RESULTADO
+    ================================================= */
+
+    function mostrarResultadoRuleta(
+      premio
+    ) {
+
+      if (
+        ruletaResultadoImagen
+      ) {
+
+        ruletaResultadoImagen.src =
+          premio.imagen;
+
+
+        ruletaResultadoImagen.alt =
+          premio.titulo;
+
+
+        ruletaResultadoImagen.hidden =
+          false;
+      }
+
+
+      if (
+        ruletaResultadoTitulo
+      ) {
+
+        ruletaResultadoTitulo.textContent =
+          premio.titulo;
+      }
+
+
+      if (
+        ruletaResultadoMensaje
+      ) {
+
+        ruletaResultadoMensaje.textContent =
+          premio.mensaje;
+      }
+
+
+      if (
+        ruletaEstado
+      ) {
+
+        ruletaEstado.textContent =
+          premio.especial
+
+            ? "🎉 ¡Premio especial! Presenta tu código para reclamarlo."
+
+            : premio.mensaje;
+      }
+    }
+
+
+    /* =================================================
+       GIRAR RULETA
+    ================================================= */
+
+    function girarRuleta() {
+
+      if (
+        ruletaGirando
+      ) {
+
+        return;
+      }
+
+
+      ruletaGirando =
+        true;
+
+
+      ruletaGirar.disabled =
+        true;
+
+
+      ruletaEstado.textContent =
+        "La ruleta está girando...";
+
+
+      actualizarRuletaCabecera();
+
+
+      ruletaParticipante =
+        obtenerParticipanteRuleta();
+
+
+      const premio =
+        seleccionarPremio(
+          ruletaParticipante
+        );
+
+
+      const cantidad =
+        premiosRuleta.length;
+              const paso =
+        360 /
+        cantidad;
+
+
+      const centro =
+        premio.indice *
+        paso +
+        paso / 2;
+
+
+      const destinoLocal =
+        (
+          360 -
+          centro +
+          360
+        ) %
+        360;
+
+
       const vueltas =
-        6 +
+        5 +
         Math.floor(
           Math.random() * 3
         );
 
 
-      const centroSegmento =
-        indiceObjetivo *
-        segmento +
-        segmento / 2;
-
-
-      const anguloObjetivo =
-        -
-          Math.PI / 2 -
-          centroSegmento;
-
-
-      const actual =
-        ruletaAngulo;
-
-
-      const dosPi =
-        Math.PI * 2;
-
-
-      let diferencia =
-        (
-          anguloObjetivo -
-          actual
-        ) %
-        dosPi;
-
-
-      if (
-        diferencia < 0
-      ) {
-
-        diferencia +=
-          dosPi;
-      }
-
-
       const destino =
-        actual +
-        vueltas * dosPi +
-        diferencia;
+        ruletaAngulo +
+        vueltas * 360 +
+        destinoLocal;
 
 
-      const duracion =
-        5200;
+      ruletaAngulo =
+        destino;
 
 
-      const inicio =
-        performance.now();
+      ruletaCanvas.style.transform =
+        `rotate(${destino}deg)`;
 
 
-      function animar(
-        tiempo
-      ) {
-
-        const progreso =
-          Math.min(
-            1,
-            (
-              tiempo -
-              inicio
-            ) /
-            duracion
-          );
-
-
-        /*
-          Ease out cúbico
-        */
-
-        const suavizado =
-          1 -
-          Math.pow(
-            1 - progreso,
-            4
-          );
-
-
-        ruletaAngulo =
-          actual +
-          (
-            destino -
-            actual
-          ) *
-          suavizado;
-
-
-        dibujarRuleta(
-          ruletaCanvas.clientWidth / 2,
-          ruletaCanvas.clientHeight / 2,
-          Math.min(
-            ruletaCanvas.clientWidth,
-            ruletaCanvas.clientHeight
-          ) * .46
-        );
-
-
-        if (
-          progreso <
-          1
-        ) {
-
-          requestAnimationFrame(
-            animar
-          );
-
-        } else {
-
-          ruletaAngulo =
-            destino;
+      setTimeout(
+        () => {
 
           ruletaGirando =
             false;
+
 
           ruletaGirar.disabled =
             false;
 
 
-          let premio =
-            obtenerPremioRuleta();
-
-
-          /*
-            Premio especial cada 120.
-          */
-
-          if (
-            premioEspecial
-          ) {
-
-            premio = {
-
-              titulo:
-                "VALE S/ 50",
-
-              mensaje:
-                "¡FELICIDADES! Ganaste un Vale de S/ 50.",
-
-              imagen:
-                "rasca/vale-50.jpg",
-
-              especial:
-                true
-            };
-          }
+          actualizarRuletaCabecera();
 
 
           mostrarResultadoRuleta(
@@ -2655,28 +3054,29 @@ document.addEventListener("DOMContentLoaded", () => {
           );
 
 
-          try {
+          if (
+            "vibrate" in navigator
+          ) {
 
-            if (
-              "vibrate" in
-              navigator
-            ) {
+            try {
 
               navigator.vibrate(
-                [40, 60, 40]
+                [40, 30, 70]
               );
-            }
 
-          } catch (_) {}
-        }
-      }
+            } catch (_) {}
 
+          }
 
-      requestAnimationFrame(
-        animar
+        },
+        5300
       );
     }
 
+
+    /* =================================================
+       BOTÓN GIRAR
+    ================================================= */
 
     ruletaGirar.addEventListener(
       "click",
@@ -2684,25 +3084,94 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
-    window.addEventListener(
-      "resize",
-      () => {
+    /* =================================================
+       REINICIAR RULETA
+    ================================================= */
 
-        if (
-          document.getElementById(
-            "ruleta"
-          )?.classList.contains(
-            "vista-activa"
-          )
-        ) {
+    if (
+      ruletaReset
+    ) {
 
-          prepararRuleta();
+      ruletaReset.addEventListener(
+        "click",
+        () => {
+
+          ruletaParticipante =
+            0;
+
+
+          ruletaGirando =
+            false;
+
+
+          ruletaGirar.disabled =
+            false;
+
+
+          ruletaCanvas.style.transition =
+            "none";
+
+
+          ruletaCanvas.style.transform =
+            "rotate(0deg)";
+
+
+          ruletaAngulo =
+            0;
+
+
+          void ruletaCanvas.offsetWidth;
+
+
+          ruletaCanvas.style.transition =
+            "transform 5.2s cubic-bezier(.12,.76,.13,1)";
+
+
+          if (
+            ruletaResultadoImagen
+          ) {
+
+            ruletaResultadoImagen.hidden =
+              true;
+          }
+
+
+          if (
+            ruletaResultadoTitulo
+          ) {
+
+            ruletaResultadoTitulo.textContent =
+              "LISTO PARA GIRAR";
+          }
+
+
+          if (
+            ruletaResultadoMensaje
+          ) {
+
+            ruletaResultadoMensaje.textContent =
+              "Tu premio aparecerá aquí.";
+          }
+
+
+          if (
+            ruletaEstado
+          ) {
+
+            ruletaEstado.textContent =
+              'Presiona "GIRAR RULETA" para participar.';
+          }
+
+
+          actualizarRuletaCabecera();
+
         }
-      }
-    );
+      );
+    }
 
 
-    prepararRuleta();
+    actualizarRuletaCabecera();
+
   }
 
 
@@ -2756,11 +3225,13 @@ document.addEventListener("DOMContentLoaded", () => {
       visitas.toLocaleString(
         "es-PE"
       );
+
   }
 
 
   /* =====================================================
      FORMULARIO DE CORREO
+     PRUEBA LOCAL
   ===================================================== */
 
   const formularioCorreo =
@@ -2768,15 +3239,18 @@ document.addEventListener("DOMContentLoaded", () => {
       "form-correo"
     );
 
+
   const campoCorreo =
     document.getElementById(
       "correo"
     );
 
+
   const aceptaCorreo =
     document.getElementById(
       "acepto-correo"
     );
+
 
   const mensajeCorreo =
     document.getElementById(
@@ -2799,6 +3273,7 @@ document.addEventListener("DOMContentLoaded", () => {
           !campoCorreo ||
           !aceptaCorreo
         ) {
+
           return;
         }
 
@@ -2807,6 +3282,7 @@ document.addEventListener("DOMContentLoaded", () => {
           !campoCorreo.checkValidity() ||
           !aceptaCorreo.checked
         ) {
+
           return;
         }
 
@@ -2837,9 +3313,11 @@ document.addEventListener("DOMContentLoaded", () => {
             correos = [];
           }
 
+
         } catch (_) {
 
           correos = [];
+
         }
 
 
@@ -2858,6 +3336,7 @@ document.addEventListener("DOMContentLoaded", () => {
           correos.push(
             correo
           );
+
         }
 
 
@@ -2875,12 +3354,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
           mensajeCorreo.textContent =
             "Gracias. Tu correo fue registrado.";
+
         }
 
 
         formularioCorreo.reset();
+
       }
     );
+
   }
+
 
 });
