@@ -188,13 +188,20 @@ document.addEventListener("DOMContentLoaded", () => {
       registro.correo &&
       /^\d{8}$/.test(registro.dni) &&
       Number.isInteger(Number(registro.participante_id)) &&
-      Number(registro.participante_id) > 0
+      Number(registro.participante_id) > 0 &&
+      Number.isInteger(Number(registro.numero_participacion)) &&
+      Number(registro.numero_participacion) > 0
     );
   }
 
   function obtenerParticipanteJuego() {
     const registro = obtenerRegistroJuego();
     return registro ? Number(registro.participante_id) || 0 : 0;
+  }
+
+  function obtenerNumeroParticipacionJuego() {
+    const registro = obtenerRegistroJuego();
+    return registro ? Number(registro.numero_participacion) || 0 : 0;
   }
 
   function mostrarErrorRegistro(mensaje) {
@@ -238,7 +245,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (error) {
       console.error("Supabase registrar_participante:", error);
       throw new Error(
-        "No se pudo registrar al participante en el servidor."
+        error.message ||
+          "No se pudo registrar al participante en el servidor."
       );
     }
 
@@ -251,15 +259,53 @@ document.addEventListener("DOMContentLoaded", () => {
     return participanteId;
   }
 
+  async function crearNumeroParticipacionEnServidor(participanteId) {
+    if (!supabaseClient) {
+      throw new Error("No se pudo inicializar la conexión con Supabase.");
+    }
+
+    const { data, error } = await supabaseClient.rpc(
+      "crear_participacion",
+      {
+        p_participante_id: participanteId
+      }
+    );
+
+    if (error) {
+      console.error("Supabase crear_participacion:", error);
+      throw new Error(
+        error.message ||
+          "No se pudo generar el número de participación."
+      );
+    }
+
+    const numeroParticipacion = Number(data);
+
+    if (
+      !Number.isInteger(numeroParticipacion) ||
+      numeroParticipacion <= 0
+    ) {
+      throw new Error(
+        "El servidor no devolvió un número de participación válido."
+      );
+    }
+
+    return numeroParticipacion;
+  }
+
   async function guardarRegistroJuego(correo, dni) {
     const participanteId =
       await registrarParticipanteEnServidor(correo, dni);
+
+    const numeroParticipacion =
+      await crearNumeroParticipacionEnServidor(participanteId);
 
     const registro = {
       correo,
       dni,
       fecha: new Date().toISOString(),
-      participante_id: participanteId
+      participante_id: participanteId,
+      numero_participacion: numeroParticipacion
     };
 
     localStorage.setItem(
@@ -267,7 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
       JSON.stringify(registro)
     );
 
-    return participanteId;
+    return registro;
   }
 
   async function guardarParticipacionJuego(juego, resultado, premio) {
@@ -310,6 +356,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function limpiarRegistroJuego() {
     localStorage.removeItem(CLAVE_REGISTRO_JUEGO);
     sessionStorage.removeItem(CLAVE_JUEGO_SELECCIONADO);
+    document.dispatchEvent(
+      new CustomEvent("piero:reiniciar-rasca")
+    );
     actualizarInterfazJuegaGana();
 
     if (campoJuegaCorreo) campoJuegaCorreo.value = "";
@@ -364,9 +413,20 @@ document.addEventListener("DOMContentLoaded", () => {
           boton.textContent = "REGISTRANDO...";
         }
 
-        await guardarRegistroJuego(correo, dni);
+        const registro =
+          await guardarRegistroJuego(correo, dni);
+
+        console.info(
+          "Registro creado:",
+          registro.participante_id,
+          "Participación:",
+          registro.numero_participacion
+        );
 
         mostrarErrorRegistro("");
+        document.dispatchEvent(
+          new CustomEvent("piero:reiniciar-rasca")
+        );
         actualizarInterfazJuegaGana();
       } catch (error) {
         mostrarErrorRegistro(
@@ -813,9 +873,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function obtenerPremio(numero) {
 
       if (
-        numero %
-          PREMIO_ESPECIAL_CADA ===
-        0
+        numero > 0 &&
+        numero % PREMIO_ESPECIAL_CADA === 0
       ) {
 
         return {
@@ -843,7 +902,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     let participante =
-      obtenerParticipanteJuego();
+      obtenerNumeroParticipacionJuego();
 
     let premioActual =
       obtenerPremio(
@@ -2307,6 +2366,49 @@ document.addEventListener("DOMContentLoaded", () => {
        PREPARAR RASCA
     ================================================= */
 
+    function reiniciarRasca() {
+
+      participante =
+        obtenerNumeroParticipacionJuego();
+
+      premioActual =
+        participante > 0
+          ? obtenerPremio(participante)
+          : null;
+
+      rascando = false;
+      tarjetaTerminada = false;
+      ultimoPunto = null;
+      ultimoChequeo = 0;
+      porcentajeActual = 0;
+
+      if (rascaCanvas) {
+        rascaCanvas.classList.remove("rascando");
+        rascaCanvas.style.opacity = participante > 0 ? "1" : "0";
+        rascaCanvas.style.pointerEvents = participante > 0 ? "auto" : "none";
+      }
+
+      if (rascaPremio) {
+        prepararPremioOculto();
+      }
+
+      actualizarCabecera();
+
+      if (rascaEstado) {
+        rascaEstado.classList.remove("progreso");
+        rascaEstado.textContent = participante > 0
+          ? "Raspa la superficie con el dedo o el mouse para descubrir tu premio."
+          : "Primero registra tu correo electrónico y DNI para participar.";
+      }
+    }
+
+
+    document.addEventListener(
+      "piero:reiniciar-rasca",
+      reiniciarRasca
+    );
+
+
     function prepararRascaSiVisible() {
 
       const seccionRasca =
@@ -2314,13 +2416,9 @@ document.addEventListener("DOMContentLoaded", () => {
           "rasca-gana"
         );
 
-
-      if (
-        !seccionRasca
-      ) {
+      if (!seccionRasca) {
         return;
       }
-
 
       if (
         !seccionRasca.classList.contains(
@@ -2330,17 +2428,35 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      const nuevoParticipante =
+        obtenerNumeroParticipacionJuego();
+
+      if (!nuevoParticipante) {
+        reiniciarRasca();
+        return;
+      }
+
+      /* Si cambió la participación o la tarjeta anterior ya terminó,
+         se prepara una tarjeta nueva y limpia. */
+      if (
+        nuevoParticipante !== participante ||
+        tarjetaTerminada
+      ) {
+        reiniciarRasca();
+      } else {
+        participante = nuevoParticipante;
+        premioActual = obtenerPremio(participante);
+        actualizarCabecera();
+      }
 
       requestAnimationFrame(
         () => {
-
           requestAnimationFrame(
             () => {
-
               if (
-                !tarjetaTerminada
+                !tarjetaTerminada &&
+                participante > 0
               ) {
-
                 prepararCanvas();
               }
             }
@@ -2609,7 +2725,7 @@ document.addEventListener("DOMContentLoaded", () => {
       false;
 
     let ruletaParticipante =
-      obtenerParticipanteJuego();
+      obtenerNumeroParticipacionJuego();
 
 
     /* =================================================
@@ -3217,7 +3333,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       ruletaParticipante =
-        obtenerParticipanteJuego();
+        obtenerNumeroParticipacionJuego();
+
+      if (!ruletaParticipante) {
+        ruletaGirando = false;
+        ruletaGirar.disabled = false;
+        ruletaEstado.textContent =
+          "Primero registra tu correo y DNI.";
+        actualizarRuletaCabecera();
+        return;
+      }
 
 
       const premio =
