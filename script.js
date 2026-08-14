@@ -56,6 +56,46 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    /*
+       JUEGA Y GANA
+       Rasca y Gana y Ruleta requieren
+       un registro previo.
+    */
+    if (
+      (id === "rasca-gana" || id === "ruleta") &&
+      !hayRegistroJuego()
+    ) {
+      vistas.forEach(v => v.classList.remove("vista-activa"));
+
+      const juegaGana =
+        document.getElementById("juega-gana");
+
+      if (juegaGana) {
+        juegaGana.classList.add("vista-activa");
+      }
+
+      cerrarMenu();
+
+      if (actualizarHash) {
+        history.replaceState(
+          null,
+          "",
+          "#juega-gana"
+        );
+      }
+
+      mostrarErrorRegistro(
+        "Primero registra tu correo electrónico y DNI para participar."
+      );
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+      return;
+    }
+
     vistas.forEach(v => v.classList.remove("vista-activa"));
     destino.classList.add("vista-activa");
 
@@ -74,6 +114,302 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(prepararRascaSiVisible, 100);
     }
   }
+
+  /* =====================================================
+     JUEGA Y GANA — REGISTRO ÚNICO
+  ===================================================== */
+
+  const CLAVE_REGISTRO_JUEGO =
+    "pieroPastorRegistroJuego";
+
+  const CLAVE_PARTICIPANTE_JUEGO =
+    "pieroPastorParticipanteJuego";
+
+  const formularioJuegaGana =
+    document.getElementById(
+      "form-juega-gana"
+    );
+
+  const campoJuegaCorreo =
+    document.getElementById(
+      "juega-correo"
+    );
+
+  const campoJuegaDni =
+    document.getElementById(
+      "juega-dni"
+    );
+
+  const juegoRegistro =
+    document.getElementById(
+      "juego-registro"
+    );
+
+  const juegosEleccion =
+    document.getElementById(
+      "juegos-eleccion"
+    );
+
+  const juegoRegistroError =
+    document.getElementById(
+      "juego-registro-error"
+    );
+
+  function obtenerRegistroJuego() {
+    try {
+      const registro =
+        JSON.parse(
+          localStorage.getItem(
+            CLAVE_REGISTRO_JUEGO
+          ) || "null"
+        );
+
+      if (
+        !registro ||
+        typeof registro !== "object"
+      ) {
+        return null;
+      }
+
+      if (
+        typeof registro.correo !== "string" ||
+        typeof registro.dni !== "string"
+      ) {
+        return null;
+      }
+
+      return registro;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function hayRegistroJuego() {
+    const registro =
+      obtenerRegistroJuego();
+
+    return Boolean(
+      registro &&
+      registro.correo &&
+      /^\d{8}$/.test(registro.dni)
+    );
+  }
+
+  function mostrarErrorRegistro(mensaje) {
+    if (!juegoRegistroError) return;
+
+    juegoRegistroError.textContent =
+      mensaje || "";
+
+    if (mensaje) {
+      juegoRegistroError.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }
+  }
+
+  function actualizarInterfazJuegaGana() {
+    const registrado =
+      hayRegistroJuego();
+
+    if (juegoRegistro) {
+      juegoRegistro.hidden =
+        registrado;
+    }
+
+    if (juegosEleccion) {
+      juegosEleccion.hidden =
+        !registrado;
+    }
+  }
+
+  function obtenerParticipanteJuego() {
+
+    const registro = obtenerRegistroJuego();
+
+    if (!registro) {
+      return 0;
+    }
+
+    const participanteGuardado =
+      Number(registro.participante);
+
+    if (
+      Number.isInteger(participanteGuardado) &&
+      participanteGuardado > 0
+    ) {
+      return participanteGuardado;
+    }
+
+    let numero =
+      Number(
+        localStorage.getItem(
+          CLAVE_PARTICIPANTE_JUEGO
+        ) || 0
+      );
+
+    if (
+      !Number.isFinite(numero) ||
+      numero < 0
+    ) {
+      numero = 0;
+    }
+
+    numero++;
+
+    localStorage.setItem(
+      CLAVE_PARTICIPANTE_JUEGO,
+      String(numero)
+    );
+
+    registro.participante = numero;
+
+    localStorage.setItem(
+      CLAVE_REGISTRO_JUEGO,
+      JSON.stringify(registro)
+    );
+
+    return numero;
+  }
+
+  function guardarRegistroJuego(
+    correo,
+    dni
+  ) {
+
+    const registro = {
+      correo,
+      dni,
+      fecha: new Date().toISOString(),
+      participante: 0
+    };
+
+    localStorage.setItem(
+      CLAVE_REGISTRO_JUEGO,
+      JSON.stringify(registro)
+    );
+
+    return obtenerParticipanteJuego();
+  }
+
+  if (formularioJuegaGana) {
+    formularioJuegaGana.addEventListener(
+      "submit",
+      evento => {
+        evento.preventDefault();
+
+        if (
+          !campoJuegaCorreo ||
+          !campoJuegaDni
+        ) {
+          return;
+        }
+
+        const correo =
+          campoJuegaCorreo.value
+            .trim()
+            .toLowerCase();
+
+        const dni =
+          campoJuegaDni.value
+            .replace(/\D/g, "")
+            .slice(0, 8);
+
+        campoJuegaDni.value =
+          dni;
+
+        if (!correo) {
+          mostrarErrorRegistro(
+            "Ingresa tu correo electrónico."
+          );
+          campoJuegaCorreo.focus();
+          return;
+        }
+
+        if (
+          !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+            correo
+          )
+        ) {
+          mostrarErrorRegistro(
+            "Ingresa un correo electrónico válido."
+          );
+          campoJuegaCorreo.focus();
+          return;
+        }
+
+        if (!/^\d{8}$/.test(dni)) {
+          mostrarErrorRegistro(
+            "El DNI debe tener exactamente 8 dígitos."
+          );
+          campoJuegaDni.focus();
+          return;
+        }
+
+        guardarRegistroJuego(
+          correo,
+          dni
+        );
+
+        mostrarErrorRegistro("");
+
+        actualizarInterfazJuegaGana();
+      }
+    );
+  }
+
+  if (campoJuegaDni) {
+    campoJuegaDni.addEventListener(
+      "input",
+      () => {
+        campoJuegaDni.value =
+          campoJuegaDni.value
+            .replace(/\D/g, "")
+            .slice(0, 8);
+      }
+    );
+  }
+
+  document
+    .querySelectorAll(
+      ".juego-opcion[data-juego]"
+    )
+    .forEach(boton => {
+      boton.addEventListener(
+        "click",
+        () => {
+          const juego =
+            boton.getAttribute(
+              "data-juego"
+            );
+
+          if (
+            !juego ||
+            !hayRegistroJuego()
+          ) {
+            activarVista(
+              "juega-gana",
+              true
+            );
+            return;
+          }
+
+          sessionStorage.setItem(
+            "pieroPastorJuegoSeleccionado",
+            juego
+          );
+
+          activarVista(
+            juego,
+            true
+          );
+        }
+      );
+    });
+
+  actualizarInterfazJuegaGana();
+
 
   function activarVistaDesdeHash() {
     const id = window.location.hash
@@ -371,8 +707,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       );
 
-    const CLAVE_CONTADOR =
-      "pieroPastorRascaParticipantes";
 
     const UMBRAL_RASCADO = 85;
 
@@ -470,32 +804,6 @@ document.addEventListener("DOMContentLoaded", () => {
        PARTICIPANTES
     ================================================= */
 
-    function obtenerParticipante() {
-
-      let numero =
-        Number(
-          localStorage.getItem(
-            CLAVE_CONTADOR
-          ) || 0
-        );
-
-      if (
-        !Number.isFinite(numero) ||
-        numero < 0
-      ) {
-        numero = 0;
-      }
-
-      numero++;
-
-      localStorage.setItem(
-        CLAVE_CONTADOR,
-        String(numero)
-      );
-
-      return numero;
-    }
-
 
     /* =================================================
        PREMIO
@@ -534,7 +842,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     let participante =
-      obtenerParticipante();
+      obtenerParticipanteJuego();
 
     let premioActual =
       obtenerPremio(
@@ -1980,7 +2288,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function nuevaTarjeta() {
 
       participante =
-        obtenerParticipante();
+        obtenerParticipanteJuego();
 
 
       premioActual =
@@ -2203,9 +2511,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const ruletaCtx =
       ruletaCanvas.getContext("2d");
 
-    const CLAVE_RULETA =
-      "pieroPastorRuletaParticipantes";
-
     const INTERVALO_VALE_RULETA =
       120;
 
@@ -2344,45 +2649,14 @@ document.addEventListener("DOMContentLoaded", () => {
       false;
 
     let ruletaParticipante =
-      0;
+      obtenerParticipanteJuego();
 
 
     /* =================================================
-       PARTICIPANTE
+       PARTICIPANTE ÚNICO
+       La Ruleta utiliza el mismo participante
+       registrado en Juega y Gana.
     ================================================= */
-
-    function obtenerParticipanteRuleta() {
-
-      let numero =
-        Number(
-          localStorage.getItem(
-            CLAVE_RULETA
-          ) || 0
-        );
-
-
-      if (
-        !Number.isFinite(
-          numero
-        ) ||
-        numero < 0
-      ) {
-
-        numero = 0;
-      }
-
-
-      numero++;
-
-
-      localStorage.setItem(
-        CLAVE_RULETA,
-        String(numero)
-      );
-
-
-      return numero;
-    }
 
 
     /* =================================================
@@ -2983,7 +3257,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       ruletaParticipante =
-        obtenerParticipanteRuleta();
+        obtenerParticipanteJuego();
 
 
       const premio =
@@ -3097,7 +3371,7 @@ document.addEventListener("DOMContentLoaded", () => {
         () => {
 
           ruletaParticipante =
-            0;
+            obtenerParticipanteJuego();
 
 
           ruletaGirando =

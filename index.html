@@ -165,14 +165,8 @@
         </li>
 
         <li>
-            <a href="#rasca-gana">
-                Rasca y Gana
-            </a>
-        </li>
-
-        <li>
-            <a href="#ruleta">
-                Ruleta
+            <a href="#juega-gana">
+                Juega y Gana
             </a>
         </li>
 
@@ -1191,6 +1185,191 @@
 
 </section>
 
+
+
+<!-- =====================================================
+     JUEGA Y GANA
+===================================================== -->
+
+<section
+    id="juega-gana"
+    class="vista seccion juega-gana-seccion"
+>
+
+    <span class="seccion-etiqueta">
+        PARTICIPA Y GANA
+    </span>
+
+    <h2>
+        Juega y Gana
+    </h2>
+
+    <p class="intro-seccion">
+        Regístrate una sola vez y elige el juego
+        con el que quieres participar.
+    </p>
+
+    <!-- =================================================
+         REGISTRO ÚNICO
+    ================================================== -->
+
+    <div
+        class="juego-registro"
+        id="juego-registro"
+    >
+
+        <div class="juego-registro-titulo">
+
+            <span>
+                REGISTRO
+            </span>
+
+            <strong>
+                Registra tus datos para participar
+            </strong>
+
+            <small>
+                Ingresa tu correo electrónico y tu DNI.
+            </small>
+
+        </div>
+
+        <form id="form-juega-gana">
+
+            <div class="juego-registro-grid">
+
+                <label>
+
+                    <span>
+                        Correo electrónico
+                    </span>
+
+                    <input
+                        type="email"
+                        id="juega-correo"
+                        placeholder="tucorreo@ejemplo.com"
+                        autocomplete="email"
+                        required
+                    >
+
+                </label>
+
+                <label>
+
+                    <span>
+                        DNI
+                    </span>
+
+                    <input
+                        type="text"
+                        id="juega-dni"
+                        placeholder="12345678"
+                        inputmode="numeric"
+                        maxlength="8"
+                        pattern="[0-9]{8}"
+                        autocomplete="off"
+                        required
+                    >
+
+                </label>
+
+            </div>
+
+            <p
+                class="juego-registro-error"
+                id="juego-registro-error"
+            ></p>
+
+            <button
+                type="submit"
+                class="juego-registro-boton"
+            >
+                CONTINUAR
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- =================================================
+         ELECCIÓN DEL JUEGO
+    ================================================== -->
+
+    <div
+        class="juegos-eleccion"
+        id="juegos-eleccion"
+        hidden
+    >
+
+        <div class="juegos-eleccion-titulo">
+
+            <span>
+                REGISTRO COMPLETADO
+            </span>
+
+            <strong>
+                ¿Qué quieres jugar?
+            </strong>
+
+            <small>
+                Elige una opción para participar.
+            </small>
+
+        </div>
+
+        <div class="juegos-eleccion-grid">
+
+            <button
+                type="button"
+                class="juego-opcion"
+                data-juego="rasca-gana"
+            >
+
+                <span
+                    class="juego-opcion-icono"
+                    aria-hidden="true"
+                >
+                    🎫
+                </span>
+
+                <strong>
+                    RASCA Y GANA
+                </strong>
+
+                <small>
+                    Rasca tu tarjeta y descubre tu premio.
+                </small>
+
+            </button>
+
+            <button
+                type="button"
+                class="juego-opcion"
+                data-juego="ruleta"
+            >
+
+                <span
+                    class="juego-opcion-icono"
+                    aria-hidden="true"
+                >
+                    🎡
+                </span>
+
+                <strong>
+                    RULETA
+                </strong>
+
+                <small>
+                    Gira la ruleta y descubre tu premio.
+                </small>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
 
 
 <!-- =====================================================

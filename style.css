@@ -3213,3 +3213,120 @@ footer {
         height: 68px !important;
     }
 }
+
+/* =========================================================
+   JUEGA Y GANA
+========================================================= */
+
+.juega-gana-seccion {
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255, 212, 0, .16),
+            transparent 34%
+        ),
+        radial-gradient(
+            circle at 50% 40%,
+            #25200b 0,
+            #111214 48%,
+            #080808 100%
+        );
+}
+
+.juegos-eleccion {
+    width: min(100%, 760px);
+    margin: 30px auto 0;
+}
+
+.juegos-eleccion[hidden] {
+    display: none !important;
+}
+
+.juegos-eleccion-titulo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.juegos-eleccion-titulo span {
+    color: var(--oro);
+    font-size: .68rem;
+    font-weight: 900;
+    letter-spacing: .16em;
+}
+
+.juegos-eleccion-titulo strong {
+    color: #fff;
+    font-size: 1.35rem;
+}
+
+.juegos-eleccion-titulo small {
+    color: #999;
+    font-size: .8rem;
+}
+
+.juegos-eleccion-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.juego-opcion {
+    min-height: 210px;
+    padding: 28px 22px;
+    border: 2px solid rgba(255, 212, 0, .45);
+    border-radius: 22px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, .055),
+            rgba(255, 255, 255, .012)
+        ),
+        #18191b;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: .25s ease;
+}
+
+.juego-opcion:hover {
+    transform: translateY(-4px);
+    border-color: var(--oro);
+    box-shadow: 0 15px 35px rgba(255, 212, 0, .12);
+}
+
+.juego-opcion-icono {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+.juego-opcion strong {
+    color: var(--oro);
+    font-size: 1.05rem;
+    letter-spacing: .04em;
+}
+
+.juego-opcion small {
+    color: #aaa;
+    font-size: .78rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+
+    .juegos-eleccion-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .juego-opcion {
+        min-height: 170px;
+    }
+
+}
